@@ -1,0 +1,1 @@
+[{"model":"Extreme thermal niche","definition":"Topt >= 80 C","n":1217,"positive_n":161,"ROC_AUC":0.936679489,"PR_AUC":0.6138934744,"balanced_accuracy":0.8728119706}]
