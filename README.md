@@ -1,12 +1,16 @@
-# ThermoBase v16
+# ThermoBase v17
 
 ## Interactive Scientific Observatory for Extremophile Physiology, Metabolism and Planetary Habitability
 
-ThermoBase v16 is the interactive research interface for the ThermoBase project. It is designed as a continuous scientific exploration rather than a conventional dashboard:
+ThermoBase v17 is the interactive research interface for the ThermoBase project. It is designed as a continuous scientific exploration rather than a conventional dashboard:
 
 **Dataset → Physiology → Environment → Metabolism → Evidence → Integrated structure → Machine learning → Environment laboratory → Planetary hypotheses → Synthesis**
 
 The interface is built around the current ThermoBase analytical release and presents the completed curation, QC, chemical adjudication, integrated analysis, machine-learning and planetary case-study work.
+
+## v17 interaction layer
+
+This release adds record-backed relationship maps for environment → metabolism and pathway → chemical role → compound, chart-specific drill-downs, a non-empty world-specific planetary framework, improved ML model transparency, full-record chat retrieval, and a right-side research drawer that no longer obscures the page. The underlying 1,238 × 337 data release is unchanged and is checked against the source CSV by the included web audit.
 
 ## Current data release
 
@@ -205,9 +209,9 @@ https://ahed.nasa.gov/datasets/e6e6ade4a91fee03d9f99ea19602/t3c34s
 
 The web application preserves the original S1 baseline conceptually and distinguishes audited, normalized, literature-augmented and derived analytical layers.
 
-## v16 interface additions
+## v17 interface additions
 
-The v16 interface adds:
+The v17 interface adds:
 
 - collapsible navigation
 - chart maximization with dedicated reading guides
@@ -222,9 +226,9 @@ The v16 interface adds:
 - improved Environment Laboratory outputs with non-empty pathway/product views
 
 
-### v16 verification focus
+### v17 verification focus
 
-The v16 interface adds a stricter visualization QA layer: every chart has an explicit reading guide and interpretation, sparse views use evidence-aware empty states, expanded charts retain drill-down context, the ML laboratory separates stored validated metrics from scenario exploration, precision–recall diagnostics are shown alongside ROC, and the environment laboratory exposes the chemical inputs used by its compatibility heuristic. The web release exposes the full 1,238-record, 337-field ML-final record schema. Missing numeric values are serialized as JSON `null` for standards-compliant browser parsing; this is a representation of missingness, not an imputation or scientific correction.
+The v17 interface adds a stricter visualization and relationship QA layer: every chart has an explicit reading guide and interpretation, sparse views use evidence-aware empty states, expanded charts retain drill-down context, the ML laboratory separates stored validated metrics from scenario exploration, precision–recall diagnostics are shown alongside ROC, and the environment laboratory exposes the chemical inputs used by its compatibility heuristic. The web release exposes the full 1,238-record, 337-field ML-final record schema. Missing numeric values are serialized as JSON `null` for standards-compliant browser parsing; this is a representation of missingness, not an imputation or scientific correction.
 
 ---
 
@@ -269,3 +273,8 @@ python WEB_AUDIT/audit_webapp.py . --source /path/to/ThermoBase_clean_v74_ML_FIN
 A release containing a failed gate should not be deployed. The automated gate complements, but does not replace, manual inspection of the live GitHub Pages rendering. The manual inspection checklist is maintained in `WEB_AUDIT/MANUAL_VISUAL_QA.md`.
 
 A GitHub Actions workflow is included so the structural release gate runs automatically on pushes and pull requests to `main`.
+
+
+### v17 release gate
+
+The included automated gate passes **78/78 checks** when run against the frozen ML-final CSV. The manual visual checklist covers relationship-map readability, ML interaction, planetary switching, chat drawer behavior and chart-specific drill-down.

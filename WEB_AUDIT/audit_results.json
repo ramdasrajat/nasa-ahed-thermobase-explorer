@@ -4,28 +4,28 @@
     "test": "file exists: index.html",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v16/index.html"
+    "detail": "/mnt/data/ThermoBase_v17/index.html"
   },
   {
     "gate": "A",
     "test": "file exists: app.js",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v16/app.js"
+    "detail": "/mnt/data/ThermoBase_v17/app.js"
   },
   {
     "gate": "A",
     "test": "file exists: styles.css",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v16/styles.css"
+    "detail": "/mnt/data/ThermoBase_v17/styles.css"
   },
   {
     "gate": "A",
     "test": "file exists: data/thermobase.json",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v16/data/thermobase.json"
+    "detail": "/mnt/data/ThermoBase_v17/data/thermobase.json"
   },
   {
     "gate": "A",
@@ -130,7 +130,7 @@
     "test": "HTML IDs unique",
     "status": "PASS",
     "severity": "",
-    "detail": "142 IDs"
+    "detail": "146 IDs"
   },
   {
     "gate": "C",
@@ -207,7 +207,7 @@
     "test": "plot calls include explanation argument",
     "status": "PASS",
     "severity": "",
-    "detail": "calls_with_explanation=34 static=34"
+    "detail": "calls_with_explanation=35 static=34"
   },
   {
     "gate": "D",
@@ -390,6 +390,41 @@
     "status": "PASS",
     "severity": "",
     "detail": "scenario logic"
+  },
+  {
+    "gate": "E",
+    "test": "environment \u2192 metabolism relationship drilldown",
+    "status": "PASS",
+    "severity": "",
+    "detail": "record-backed flow map"
+  },
+  {
+    "gate": "E",
+    "test": "pathway \u2192 chemistry relationship drilldown",
+    "status": "PASS",
+    "severity": "",
+    "detail": "record-backed chemistry map"
+  },
+  {
+    "gate": "E",
+    "test": "planetary content uses selected-world title",
+    "status": "PASS",
+    "severity": "",
+    "detail": "world-specific content binding"
+  },
+  {
+    "gate": "E",
+    "test": "ML transparency panel present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "predictor/methodology explanation"
+  },
+  {
+    "gate": "E",
+    "test": "chat searches full web record",
+    "status": "PASS",
+    "severity": "",
+    "detail": "full-record retrieval"
   },
   {
     "gate": "F",

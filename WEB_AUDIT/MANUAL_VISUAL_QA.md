@@ -59,3 +59,23 @@ Automated audit is necessary but cannot prove that a live browser layout is visu
 - [ ] No fixed panel obscures content.
 - [ ] Dark mode has readable contrast.
 - [ ] Keyboard focus is visible.
+
+## v17 relationship and scientific interaction checks
+
+- [ ] Environment → metabolism flow map visibly shows links, not two floating node lists.
+- [ ] Clicking a flow opens the supporting organism records and the displayed count matches the filtered data.
+- [ ] Pathway → chemical role → compound map visibly shows links for a pathway with adjudicated chemistry.
+- [ ] Chemical links are understood as record-level evidence, not reaction flux.
+- [ ] 337-field architecture first view is readable; clicking a family reveals field-level coverage and field chips.
+- [ ] Measurement coverage uses readable horizontal labels with no clipped y-axis text.
+- [ ] Parallel coordinates support axis brushing and the selected subset is reflected in the drill-down area.
+- [ ] Oxygen categories use a readable ranked display and clicking a category exposes pathways/environments.
+- [ ] ML laboratory fills the main workspace with performance, comparison, stress-test, ROC, PR and threshold diagnostics rather than leaving a large blank region.
+- [ ] ML predictor-set and validation controls update the output consistently.
+- [ ] ML feature/method panel clearly distinguishes predictor groups, leakage control, validation and interpretation.
+- [ ] Planetary page never retains an Enceladus title/chain when another world is selected.
+- [ ] Non-Enceladus worlds show a compact explanation of why the Enceladus 14-point matrix is not transferred, rather than a giant empty chart.
+- [ ] Research Chat opens as a side drawer without covering the underlying page on desktop.
+- [ ] Free-form chat questions produce an answer even when no preset chip is used.
+- [ ] Chat answers distinguish answer, evidence, interpretation and limitations where applicable.
+- [ ] Collapsed navigation exposes readable tooltips for inactive sections.

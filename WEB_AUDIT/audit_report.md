@@ -1,16 +1,16 @@
 # ThermoBase Web Audit Report
 
-**PASS:** 73  **FAIL:** 0  **WARN:** 0
+**PASS:** 78  **FAIL:** 0  **WARN:** 0
 
 ## Release gate
 **STATUS: PASS — release gate clean**
 
 | Gate | Test | Status | Detail |
 |---|---|---|---|
-| A | file exists: index.html | PASS | /mnt/data/ThermoBase_v16/index.html |
-| A | file exists: app.js | PASS | /mnt/data/ThermoBase_v16/app.js |
-| A | file exists: styles.css | PASS | /mnt/data/ThermoBase_v16/styles.css |
-| A | file exists: data/thermobase.json | PASS | /mnt/data/ThermoBase_v16/data/thermobase.json |
+| A | file exists: index.html | PASS | /mnt/data/ThermoBase_v17/index.html |
+| A | file exists: app.js | PASS | /mnt/data/ThermoBase_v17/app.js |
+| A | file exists: styles.css | PASS | /mnt/data/ThermoBase_v17/styles.css |
+| A | file exists: data/thermobase.json | PASS | /mnt/data/ThermoBase_v17/data/thermobase.json |
 | A | valid JSON | PASS | standards-compliant JSON |
 | A | record count | PASS | 1238 |
 | A | field count | PASS | 337 |
@@ -25,7 +25,7 @@
 | B | source dimensions | PASS | 1238×337 |
 | B | source/web column order identical | PASS | mismatch index=None |
 | B | source/web values equivalent | PASS | mismatches=[]; max numeric serialization delta=8.88e-16 |
-| C | HTML IDs unique | PASS | 142 IDs |
+| C | HTML IDs unique | PASS | 146 IDs |
 | C | static JS DOM references resolve | PASS | missing=[] |
 | C | scientific journey sections present | PASS | missing=[] |
 | C | data path is local JSON | PASS | client data path |
@@ -36,7 +36,7 @@
 | D | dynamic chart targets explicitly handled | PASS | modalPlot is a static modal mount; chatPlot is created dynamically by chatVisual() |
 | D | chart maximize contract | PASS | maximize/fullscreen |
 | D | no-data contract | PASS | evidence-aware empty state |
-| D | plot calls include explanation argument | PASS | calls_with_explanation=34 static=34 |
+| D | plot calls include explanation argument | PASS | calls_with_explanation=35 static=34 |
 | D | explanation contract | PASS | universal guide injection |
 | D | every static chart has a guide entry | PASS | missing=[] |
 | E | control exists: fDomain | PASS | present=True |
@@ -63,6 +63,11 @@
 | E | record drilldown | PASS | record detail path |
 | E | metabolism search | PASS | search path |
 | E | environment scenario updates inputs | PASS | scenario logic |
+| E | environment → metabolism relationship drilldown | PASS | record-backed flow map |
+| E | pathway → chemistry relationship drilldown | PASS | record-backed chemistry map |
+| E | planetary content uses selected-world title | PASS | world-specific content binding |
+| E | ML transparency panel present | PASS | predictor/methodology explanation |
+| E | chat searches full web record | PASS | full-record retrieval |
 | F | ML target count: methanogenesis | PASS | web=52 expected=52 |
 | F | ML target count: sulfate reduction | PASS | web=77 expected=77 |
 | F | ML target count: sulfur reduction | PASS | web=113 expected=113 |

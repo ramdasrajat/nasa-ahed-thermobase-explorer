@@ -154,6 +154,11 @@ def audit(root,source=None):
  add('E','record drilldown','showRecord(' in jsx and '[data-record]' in jsx,'record detail path')
  add('E','metabolism search','metSearch' in ids and 'renderMetabolism' in jsx,'search path')
  add('E','environment scenario updates inputs','runSandbox' in jsx and all(x in jsx for x in ['sbH2','sbCO2','sbSulfate','sbSulfur','sbIron']),'scenario logic')
+ add('E','environment → metabolism relationship drilldown','envMetSankey' in ids and 'envMetSankeyDetail' in ids and 'supporting records' in jsx,'record-backed flow map')
+ add('E','pathway → chemistry relationship drilldown','chemSankey' in ids and 'extracted_compound_final_role_v71' in jsx and 'compoundRoleCounts' in jsx,'record-backed chemistry map')
+ add('E','planetary content uses selected-world title','worldChainTitle' in ids and 'chainTitle.textContent' in jsx and 'chains[w]' in jsx,'world-specific content binding')
+ add('E','ML transparency panel present','mlFeatureMap' in ids and 'What enters the model?' in jsx and 'Leakage control' in jsx,'predictor/methodology explanation')
+ add('E','chat searches full web record','Object.values(r).some' in jsx and 'full 337-field web release' in jsx,'full-record retrieval')
  # F scientific release consistency
  for label,expected in EXPECTED_TARGETS.items():
   n=sum(has_path(r.get('metabolism_pathways'),label) for r in rec);add('F',f'ML target count: {label}',n==expected,f'web={n} expected={expected}')
