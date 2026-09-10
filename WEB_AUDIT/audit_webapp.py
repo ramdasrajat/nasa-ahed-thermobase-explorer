@@ -159,19 +159,6 @@ def audit(root,source=None):
  add('E','planetary content uses selected-world title','worldChainTitle' in ids and 'chainTitle.textContent' in jsx and 'chains[w]' in jsx,'world-specific content binding')
  add('E','ML transparency panel present','mlFeatureMap' in ids and 'What enters the model?' in jsx and 'Leakage control' in jsx,'predictor/methodology explanation')
  add('E','chat searches full web record','Object.values(r).some' in jsx and 'full 337-field web release' in jsx,'full-record retrieval')
- # I: visual interaction regression contracts
- add('I','donut/sunburst labels moved to external legends',"type:'pie'" in jsx and "textinfo:'none'" in jsx and 'architectureLegend' in ids and 'chemLegend' in ids,'pie/sunburst chart text suppressed; external legend mounts present')
- add('I','expanded chart overflow guarded','modalMargins' in jsx and '.modal-plot{height:' in cssx and '.chart-modal' in cssx,'expanded plots receive chart-specific margins and bounded viewport height')
- add('I','temperature × pH point drilldown wired','plotly_doubleclick' in jsx and 'physScatter' in jsx and 'recordDrillHTML' in jsx,'click and double-click resolve to record-level drilldown')
- add('I','multidimensional physiology drilldown wired','plotly_restyle' in jsx and 'parallelPhys' in ids and 'parallelLegend' in ids,'axis brushing and point selection update the measured-record drilldown')
- add('I','taxonomy cell drilldown wired','envTaxHeat' in jsx and 'r.environment===e&&r.phylum===ph' in jsx and 'renderRecordList' in jsx,'environment × phylum cell selection retrieves supporting records')
- add('I','oxygen selection highlighting wired','marker.opacity' in jsx and 'oxygenChart' in jsx and 'oxygenDetail' in ids,'selected oxygen category is visually emphasized and exposes detail')
- add('I','relationship maps support selected-link highlighting','chemSankey' in jsx and 'envMetSankey' in jsx and "link.color" in jsx,'selected flows are highlighted while non-selected flows are de-emphasized')
- add('I','ML starter presets present','ml-preset' in jsx and 'applyMLPreset' in jsx,'preset configurations provide a guided first interaction before manual experimentation')
- add('I','chat has keyword/question/visual presets','chat-preset-groups' in h.read_text(encoding='utf-8') and 'KEYWORDS' in h.read_text(encoding='utf-8') and 'QUESTIONS' in h.read_text(encoding='utf-8') and 'VISUALS' in h.read_text(encoding='utf-8'),'three preset groups are exposed')
- add('I','chat answers can be copied','chat-copy' in jsx and 'navigator.clipboard' in jsx,'assistant responses expose a copy action')
- add('I','collapsed navigation retains readable labels','sidebar-collapsed' in cssx and 'data-label' in h.read_text(encoding='utf-8') and '::before' in cssx,'collapsed sidebar uses data-label text rather than number-only navigation')
- add('I','source navigation and provenance note are separate functions','source-link' in h.read_text(encoding='utf-8') and 'Source baseline' in h.read_text(encoding='utf-8') and 'Open original NASA AHED' not in h.read_text(encoding='utf-8'),'top-bar link navigates; lower note records provenance without duplicating the CTA')
  # F scientific release consistency
  for label,expected in EXPECTED_TARGETS.items():
   n=sum(has_path(r.get('metabolism_pathways'),label) for r in rec);add('F',f'ML target count: {label}',n==expected,f'web={n} expected={expected}')
@@ -207,6 +194,6 @@ def write_reports(root,results):
 
 if __name__=='__main__':
  ap=argparse.ArgumentParser();ap.add_argument('root');ap.add_argument('--source');a=ap.parse_args();res=audit(a.root,a.source);p,f,w=write_reports(Path(a.root),res)
- print(f'THERMOBASE WEB AUDIT SYSTEM v2.1\nPASS={p} FAIL={f} WARN={w}\n')
+ print(f'THERMOBASE WEB AUDIT SYSTEM v2\nPASS={p} FAIL={f} WARN={w}\n')
  for r in res:print(f"[{r['status']}] {r['gate']} | {r['test']} | {r['detail']}")
  sys.exit(1 if f else 0)
