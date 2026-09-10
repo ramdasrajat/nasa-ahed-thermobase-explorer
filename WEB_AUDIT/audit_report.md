@@ -1,16 +1,16 @@
 # ThermoBase Web Audit Report
 
-**PASS:** 78  **FAIL:** 0  **WARN:** 0
+**PASS:** 90  **FAIL:** 0  **WARN:** 0
 
 ## Release gate
 **STATUS: PASS — release gate clean**
 
 | Gate | Test | Status | Detail |
 |---|---|---|---|
-| A | file exists: index.html | PASS | /mnt/data/ThermoBase_v17/index.html |
-| A | file exists: app.js | PASS | /mnt/data/ThermoBase_v17/app.js |
-| A | file exists: styles.css | PASS | /mnt/data/ThermoBase_v17/styles.css |
-| A | file exists: data/thermobase.json | PASS | /mnt/data/ThermoBase_v17/data/thermobase.json |
+| A | file exists: index.html | PASS | /mnt/data/ThermoBase_v18/index.html |
+| A | file exists: app.js | PASS | /mnt/data/ThermoBase_v18/app.js |
+| A | file exists: styles.css | PASS | /mnt/data/ThermoBase_v18/styles.css |
+| A | file exists: data/thermobase.json | PASS | /mnt/data/ThermoBase_v18/data/thermobase.json |
 | A | valid JSON | PASS | standards-compliant JSON |
 | A | record count | PASS | 1238 |
 | A | field count | PASS | 337 |
@@ -25,7 +25,7 @@
 | B | source dimensions | PASS | 1238×337 |
 | B | source/web column order identical | PASS | mismatch index=None |
 | B | source/web values equivalent | PASS | mismatches=[]; max numeric serialization delta=8.88e-16 |
-| C | HTML IDs unique | PASS | 146 IDs |
+| C | HTML IDs unique | PASS | 149 IDs |
 | C | static JS DOM references resolve | PASS | missing=[] |
 | C | scientific journey sections present | PASS | missing=[] |
 | C | data path is local JSON | PASS | client data path |
@@ -68,6 +68,18 @@
 | E | planetary content uses selected-world title | PASS | world-specific content binding |
 | E | ML transparency panel present | PASS | predictor/methodology explanation |
 | E | chat searches full web record | PASS | full-record retrieval |
+| I | donut/sunburst labels moved to external legends | PASS | pie/sunburst chart text suppressed; external legend mounts present |
+| I | expanded chart overflow guarded | PASS | expanded plots receive chart-specific margins and bounded viewport height |
+| I | temperature × pH point drilldown wired | PASS | click and double-click resolve to record-level drilldown |
+| I | multidimensional physiology drilldown wired | PASS | axis brushing and point selection update the measured-record drilldown |
+| I | taxonomy cell drilldown wired | PASS | environment × phylum cell selection retrieves supporting records |
+| I | oxygen selection highlighting wired | PASS | selected oxygen category is visually emphasized and exposes detail |
+| I | relationship maps support selected-link highlighting | PASS | selected flows are highlighted while non-selected flows are de-emphasized |
+| I | ML starter presets present | PASS | preset configurations provide a guided first interaction before manual experimentation |
+| I | chat has keyword/question/visual presets | PASS | three preset groups are exposed |
+| I | chat answers can be copied | PASS | assistant responses expose a copy action |
+| I | collapsed navigation retains readable labels | PASS | collapsed sidebar uses data-label text rather than number-only navigation |
+| I | source navigation and provenance note are separate functions | PASS | top-bar link navigates; lower note records provenance without duplicating the CTA |
 | F | ML target count: methanogenesis | PASS | web=52 expected=52 |
 | F | ML target count: sulfate reduction | PASS | web=77 expected=77 |
 | F | ML target count: sulfur reduction | PASS | web=113 expected=113 |

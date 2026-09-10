@@ -4,28 +4,28 @@
     "test": "file exists: index.html",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v17/index.html"
+    "detail": "/mnt/data/ThermoBase_v18/index.html"
   },
   {
     "gate": "A",
     "test": "file exists: app.js",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v17/app.js"
+    "detail": "/mnt/data/ThermoBase_v18/app.js"
   },
   {
     "gate": "A",
     "test": "file exists: styles.css",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v17/styles.css"
+    "detail": "/mnt/data/ThermoBase_v18/styles.css"
   },
   {
     "gate": "A",
     "test": "file exists: data/thermobase.json",
     "status": "PASS",
     "severity": "",
-    "detail": "/mnt/data/ThermoBase_v17/data/thermobase.json"
+    "detail": "/mnt/data/ThermoBase_v18/data/thermobase.json"
   },
   {
     "gate": "A",
@@ -130,7 +130,7 @@
     "test": "HTML IDs unique",
     "status": "PASS",
     "severity": "",
-    "detail": "146 IDs"
+    "detail": "149 IDs"
   },
   {
     "gate": "C",
@@ -425,6 +425,90 @@
     "status": "PASS",
     "severity": "",
     "detail": "full-record retrieval"
+  },
+  {
+    "gate": "I",
+    "test": "donut/sunburst labels moved to external legends",
+    "status": "PASS",
+    "severity": "",
+    "detail": "pie/sunburst chart text suppressed; external legend mounts present"
+  },
+  {
+    "gate": "I",
+    "test": "expanded chart overflow guarded",
+    "status": "PASS",
+    "severity": "",
+    "detail": "expanded plots receive chart-specific margins and bounded viewport height"
+  },
+  {
+    "gate": "I",
+    "test": "temperature \u00d7 pH point drilldown wired",
+    "status": "PASS",
+    "severity": "",
+    "detail": "click and double-click resolve to record-level drilldown"
+  },
+  {
+    "gate": "I",
+    "test": "multidimensional physiology drilldown wired",
+    "status": "PASS",
+    "severity": "",
+    "detail": "axis brushing and point selection update the measured-record drilldown"
+  },
+  {
+    "gate": "I",
+    "test": "taxonomy cell drilldown wired",
+    "status": "PASS",
+    "severity": "",
+    "detail": "environment \u00d7 phylum cell selection retrieves supporting records"
+  },
+  {
+    "gate": "I",
+    "test": "oxygen selection highlighting wired",
+    "status": "PASS",
+    "severity": "",
+    "detail": "selected oxygen category is visually emphasized and exposes detail"
+  },
+  {
+    "gate": "I",
+    "test": "relationship maps support selected-link highlighting",
+    "status": "PASS",
+    "severity": "",
+    "detail": "selected flows are highlighted while non-selected flows are de-emphasized"
+  },
+  {
+    "gate": "I",
+    "test": "ML starter presets present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "preset configurations provide a guided first interaction before manual experimentation"
+  },
+  {
+    "gate": "I",
+    "test": "chat has keyword/question/visual presets",
+    "status": "PASS",
+    "severity": "",
+    "detail": "three preset groups are exposed"
+  },
+  {
+    "gate": "I",
+    "test": "chat answers can be copied",
+    "status": "PASS",
+    "severity": "",
+    "detail": "assistant responses expose a copy action"
+  },
+  {
+    "gate": "I",
+    "test": "collapsed navigation retains readable labels",
+    "status": "PASS",
+    "severity": "",
+    "detail": "collapsed sidebar uses data-label text rather than number-only navigation"
+  },
+  {
+    "gate": "I",
+    "test": "source navigation and provenance note are separate functions",
+    "status": "PASS",
+    "severity": "",
+    "detail": "top-bar link navigates; lower note records provenance without duplicating the CTA"
   },
   {
     "gate": "F",
