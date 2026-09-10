@@ -1,0 +1,513 @@
+[
+  {
+    "gate": "A",
+    "test": "file exists: index.html",
+    "status": "PASS",
+    "severity": "",
+    "detail": "/mnt/data/ThermoBase_v16/index.html"
+  },
+  {
+    "gate": "A",
+    "test": "file exists: app.js",
+    "status": "PASS",
+    "severity": "",
+    "detail": "/mnt/data/ThermoBase_v16/app.js"
+  },
+  {
+    "gate": "A",
+    "test": "file exists: styles.css",
+    "status": "PASS",
+    "severity": "",
+    "detail": "/mnt/data/ThermoBase_v16/styles.css"
+  },
+  {
+    "gate": "A",
+    "test": "file exists: data/thermobase.json",
+    "status": "PASS",
+    "severity": "",
+    "detail": "/mnt/data/ThermoBase_v16/data/thermobase.json"
+  },
+  {
+    "gate": "A",
+    "test": "valid JSON",
+    "status": "PASS",
+    "severity": "",
+    "detail": "standards-compliant JSON"
+  },
+  {
+    "gate": "A",
+    "test": "record count",
+    "status": "PASS",
+    "severity": "",
+    "detail": "1238"
+  },
+  {
+    "gate": "A",
+    "test": "field count",
+    "status": "PASS",
+    "severity": "",
+    "detail": "337"
+  },
+  {
+    "gate": "A",
+    "test": "schema names unique",
+    "status": "PASS",
+    "severity": "",
+    "detail": "337 unique names"
+  },
+  {
+    "gate": "A",
+    "test": "every record exposes full schema",
+    "status": "PASS",
+    "severity": "",
+    "detail": "key counts=[337]"
+  },
+  {
+    "gate": "A",
+    "test": "all schema fields present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "missing=[]"
+  },
+  {
+    "gate": "A",
+    "test": "record IDs unique",
+    "status": "PASS",
+    "severity": "",
+    "detail": "1238 unique"
+  },
+  {
+    "gate": "A",
+    "test": "no NaN/Infinity in JSON",
+    "status": "PASS",
+    "severity": "",
+    "detail": "bad=[]"
+  },
+  {
+    "gate": "A",
+    "test": "metadata dimensions agree",
+    "status": "PASS",
+    "severity": "",
+    "detail": "{'records': 1238, 'columns': 337, 'version': 'v74 ML final release', 'frozen_dataset': 'v72', 'analysis_release': 'v74', 'integration_release': 'v75'}"
+  },
+  {
+    "gate": "A",
+    "test": "frozen web data SHA256 matches release manifest",
+    "status": "PASS",
+    "severity": "",
+    "detail": "actual=352330dd7e295665d30c3234164526e49ff1d04ecc50d9bd739a662aa02e23b4 expected=352330dd7e295665d30c3234164526e49ff1d04ecc50d9bd739a662aa02e23b4"
+  },
+  {
+    "gate": "A",
+    "test": "release manifest dimensions agree",
+    "status": "PASS",
+    "severity": "",
+    "detail": "manifest=1238\u00d7337"
+  },
+  {
+    "gate": "B",
+    "test": "source dimensions",
+    "status": "PASS",
+    "severity": "",
+    "detail": "1238\u00d7337"
+  },
+  {
+    "gate": "B",
+    "test": "source/web column order identical",
+    "status": "PASS",
+    "severity": "",
+    "detail": "mismatch index=None"
+  },
+  {
+    "gate": "B",
+    "test": "source/web values equivalent",
+    "status": "PASS",
+    "severity": "",
+    "detail": "mismatches=[]; max numeric serialization delta=8.88e-16"
+  },
+  {
+    "gate": "C",
+    "test": "HTML IDs unique",
+    "status": "PASS",
+    "severity": "",
+    "detail": "142 IDs"
+  },
+  {
+    "gate": "C",
+    "test": "static JS DOM references resolve",
+    "status": "PASS",
+    "severity": "",
+    "detail": "missing=[]"
+  },
+  {
+    "gate": "C",
+    "test": "scientific journey sections present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "missing=[]"
+  },
+  {
+    "gate": "C",
+    "test": "data path is local JSON",
+    "status": "PASS",
+    "severity": "",
+    "detail": "client data path"
+  },
+  {
+    "gate": "C",
+    "test": "free-form chat wired",
+    "status": "PASS",
+    "severity": "",
+    "detail": "chat form"
+  },
+  {
+    "gate": "C",
+    "test": "navigation history wired",
+    "status": "PASS",
+    "severity": "",
+    "detail": "browser history"
+  },
+  {
+    "gate": "C",
+    "test": "collapsible/mobile navigation wired",
+    "status": "PASS",
+    "severity": "",
+    "detail": "navigation controls"
+  },
+  {
+    "gate": "D",
+    "test": "all static chart containers have render paths",
+    "status": "PASS",
+    "severity": "",
+    "detail": "missing=[]"
+  },
+  {
+    "gate": "D",
+    "test": "dynamic chart targets explicitly handled",
+    "status": "PASS",
+    "severity": "",
+    "detail": "modalPlot is a static modal mount; chatPlot is created dynamically by chatVisual()"
+  },
+  {
+    "gate": "D",
+    "test": "chart maximize contract",
+    "status": "PASS",
+    "severity": "",
+    "detail": "maximize/fullscreen"
+  },
+  {
+    "gate": "D",
+    "test": "no-data contract",
+    "status": "PASS",
+    "severity": "",
+    "detail": "evidence-aware empty state"
+  },
+  {
+    "gate": "D",
+    "test": "plot calls include explanation argument",
+    "status": "PASS",
+    "severity": "",
+    "detail": "calls_with_explanation=34 static=34"
+  },
+  {
+    "gate": "D",
+    "test": "explanation contract",
+    "status": "PASS",
+    "severity": "",
+    "detail": "universal guide injection"
+  },
+  {
+    "gate": "D",
+    "test": "every static chart has a guide entry",
+    "status": "PASS",
+    "severity": "",
+    "detail": "missing=[]"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: fDomain",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: fEnvironment",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: fTopt",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: fPh",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: fMet",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: mlPathway",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: mlPredictors",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: mlValidation",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: mlThreshold",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbTemp",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbPH",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbSal",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbPressure",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbO2",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbH2",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbCO2",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbSulfate",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbSulfur",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: sbIron",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "control exists: chatQuestion",
+    "status": "PASS",
+    "severity": "",
+    "detail": "present=True"
+  },
+  {
+    "gate": "E",
+    "test": "field explorer drilldown",
+    "status": "PASS",
+    "severity": "",
+    "detail": "field detail path"
+  },
+  {
+    "gate": "E",
+    "test": "record drilldown",
+    "status": "PASS",
+    "severity": "",
+    "detail": "record detail path"
+  },
+  {
+    "gate": "E",
+    "test": "metabolism search",
+    "status": "PASS",
+    "severity": "",
+    "detail": "search path"
+  },
+  {
+    "gate": "E",
+    "test": "environment scenario updates inputs",
+    "status": "PASS",
+    "severity": "",
+    "detail": "scenario logic"
+  },
+  {
+    "gate": "F",
+    "test": "ML target count: methanogenesis",
+    "status": "PASS",
+    "severity": "",
+    "detail": "web=52 expected=52"
+  },
+  {
+    "gate": "F",
+    "test": "ML target count: sulfate reduction",
+    "status": "PASS",
+    "severity": "",
+    "detail": "web=77 expected=77"
+  },
+  {
+    "gate": "F",
+    "test": "ML target count: sulfur reduction",
+    "status": "PASS",
+    "severity": "",
+    "detail": "web=113 expected=113"
+  },
+  {
+    "gate": "F",
+    "test": "ML target count: iron reduction",
+    "status": "PASS",
+    "severity": "",
+    "detail": "web=26 expected=26"
+  },
+  {
+    "gate": "F",
+    "test": "ML target count: fermentation",
+    "status": "PASS",
+    "severity": "",
+    "detail": "web=152 expected=152"
+  },
+  {
+    "gate": "F",
+    "test": "ML target count: hydrogen oxidation",
+    "status": "PASS",
+    "severity": "",
+    "detail": "web=23 expected=23"
+  },
+  {
+    "gate": "F",
+    "test": "model comparison release present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "rows=18"
+  },
+  {
+    "gate": "F",
+    "test": "grouped validation release present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "rows=6"
+  },
+  {
+    "gate": "F",
+    "test": "OOF row count",
+    "status": "PASS",
+    "severity": "",
+    "detail": "rows=1238"
+  },
+  {
+    "gate": "G",
+    "test": "14/14 has non-probabilistic framing",
+    "status": "PASS",
+    "severity": "",
+    "detail": "mentions=3, explicit_negation=True"
+  },
+  {
+    "gate": "G",
+    "test": "external links use HTTPS",
+    "status": "PASS",
+    "severity": "",
+    "detail": "[]"
+  },
+  {
+    "gate": "G",
+    "test": "original NASA dataset link present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "NASA/AHED link"
+  },
+  {
+    "gate": "H",
+    "test": "responsive CSS present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "media queries"
+  },
+  {
+    "gate": "H",
+    "test": "horizontal overflow guarded",
+    "status": "PASS",
+    "severity": "",
+    "detail": "overflow protection"
+  },
+  {
+    "gate": "H",
+    "test": "focus states present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "keyboard focus"
+  },
+  {
+    "gate": "H",
+    "test": "theme support present",
+    "status": "PASS",
+    "severity": "",
+    "detail": "light/dark mode"
+  },
+  {
+    "gate": "H",
+    "test": "payload size under 35 MB",
+    "status": "PASS",
+    "severity": "",
+    "detail": "24.84 MB"
+  }
+]

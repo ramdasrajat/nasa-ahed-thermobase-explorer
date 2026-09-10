@@ -1,8 +1,8 @@
-# ThermoBase v11
+# ThermoBase v16
 
 ## Interactive Scientific Observatory for Extremophile Physiology, Metabolism and Planetary Habitability
 
-ThermoBase v11 is the interactive research interface for the ThermoBase project. It is designed as a continuous scientific exploration rather than a conventional dashboard:
+ThermoBase v16 is the interactive research interface for the ThermoBase project. It is designed as a continuous scientific exploration rather than a conventional dashboard:
 
 **Dataset → Physiology → Environment → Metabolism → Evidence → Integrated structure → Machine learning → Environment laboratory → Planetary hypotheses → Synthesis**
 
@@ -195,3 +195,77 @@ AI-assisted tools were used during selected programming, visualization, research
 > **Do not hide complexity; organize it.**
 
 ThermoBase is deliberately built so that users can move from an attractive pattern to the evidence behind it, from the evidence to the confounders, from the model to its stress test, and from a planetary hypothesis to the abiotic alternatives that could make it fail.
+
+
+## Original dataset
+
+The immutable source baseline used by this project is the NASA Astrobiology Habitable Environments Database (AHED) ThermoBase dataset:
+
+https://ahed.nasa.gov/datasets/e6e6ade4a91fee03d9f99ea19602/t3c34s
+
+The web application preserves the original S1 baseline conceptually and distinguishes audited, normalized, literature-augmented and derived analytical layers.
+
+## v16 interface additions
+
+The v16 interface adds:
+
+- collapsible navigation
+- chart maximization with dedicated reading guides
+- explicit “How to read” and “What it tells us” guidance for visualizations
+- reliable no-data states instead of blank charts
+- drillable 337-field architecture based on the actual field list
+- evidence search that can match representative field values as well as field names
+- an expanded ML Model Explorer using the stored v74 validated metrics and out-of-fold environment-model probabilities for measured records
+- transparent methodology and leakage-control explanations
+- a simplified planetary comparison framework that does not assign a common probability of life
+- an explicit Enceladus reasoning chain separating observation, metabolic analogue, chemical hypothesis and abiotic alternative
+- improved Environment Laboratory outputs with non-empty pathway/product views
+
+
+### v16 verification focus
+
+The v16 interface adds a stricter visualization QA layer: every chart has an explicit reading guide and interpretation, sparse views use evidence-aware empty states, expanded charts retain drill-down context, the ML laboratory separates stored validated metrics from scenario exploration, precision–recall diagnostics are shown alongside ROC, and the environment laboratory exposes the chemical inputs used by its compatibility heuristic. The web release exposes the full 1,238-record, 337-field ML-final record schema. Missing numeric values are serialized as JSON `null` for standards-compliant browser parsing; this is a representation of missingness, not an imputation or scientific correction.
+
+---
+
+# 28. Automated Web Release Audit
+
+ThermoBase includes a dedicated `WEB_AUDIT` release gate so that recurring application and data-integrity failures are checked systematically rather than by memory.
+
+The audit verifies:
+
+- release dimensions (1,238 × 337)
+- complete 337-field exposure in every web record
+- unique schema and record identifiers
+- standards-compliant JSON with no NaN/Infinity values
+- frozen web-data SHA-256 against the release manifest
+- source-to-web column order and value equivalence when the source CSV is supplied
+- chart render paths
+- dynamic chart mounts
+- maximize/fullscreen support
+- universal chart explanation and empty-state contracts
+- navigation and browser-history wiring
+- physiology, ML and environment-laboratory controls
+- field and record drill-down paths
+- metabolic target counts against the validated release
+- ML comparison, grouped-validation and OOF layers
+- non-probabilistic framing of the Enceladus 14/14 compatibility score
+- HTTPS source links
+- responsive and overflow safeguards
+- dark-mode support
+
+Run the release gate locally with:
+
+```bash
+python WEB_AUDIT/audit_webapp.py .
+```
+
+For the strongest data check, supply the exact ML-final CSV used to build the web release:
+
+```bash
+python WEB_AUDIT/audit_webapp.py . --source /path/to/ThermoBase_clean_v74_ML_FINAL_RELEASE.csv
+```
+
+A release containing a failed gate should not be deployed. The automated gate complements, but does not replace, manual inspection of the live GitHub Pages rendering. The manual inspection checklist is maintained in `WEB_AUDIT/MANUAL_VISUAL_QA.md`.
+
+A GitHub Actions workflow is included so the structural release gate runs automatically on pushes and pull requests to `main`.

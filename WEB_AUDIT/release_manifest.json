@@ -1,0 +1,10 @@
+{
+  "release": "ThermoBase v16 web release",
+  "data_file": "data/thermobase.json",
+  "data_sha256": "352330dd7e295665d30c3234164526e49ff1d04ecc50d9bd739a662aa02e23b4",
+  "records": 1238,
+  "fields": 337,
+  "analysis_release": "v74",
+  "integration_release": "v75",
+  "source_baseline": "ThermoBase_clean_v74_ML_FINAL_RELEASE.csv"
+}

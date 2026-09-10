@@ -1,0 +1,85 @@
+# ThermoBase Web Audit Report
+
+**PASS:** 73  **FAIL:** 0  **WARN:** 0
+
+## Release gate
+**STATUS: PASS — release gate clean**
+
+| Gate | Test | Status | Detail |
+|---|---|---|---|
+| A | file exists: index.html | PASS | /mnt/data/ThermoBase_v16/index.html |
+| A | file exists: app.js | PASS | /mnt/data/ThermoBase_v16/app.js |
+| A | file exists: styles.css | PASS | /mnt/data/ThermoBase_v16/styles.css |
+| A | file exists: data/thermobase.json | PASS | /mnt/data/ThermoBase_v16/data/thermobase.json |
+| A | valid JSON | PASS | standards-compliant JSON |
+| A | record count | PASS | 1238 |
+| A | field count | PASS | 337 |
+| A | schema names unique | PASS | 337 unique names |
+| A | every record exposes full schema | PASS | key counts=[337] |
+| A | all schema fields present | PASS | missing=[] |
+| A | record IDs unique | PASS | 1238 unique |
+| A | no NaN/Infinity in JSON | PASS | bad=[] |
+| A | metadata dimensions agree | PASS | {'records': 1238, 'columns': 337, 'version': 'v74 ML final release', 'frozen_dataset': 'v72', 'analysis_release': 'v74', 'integration_release': 'v75'} |
+| A | frozen web data SHA256 matches release manifest | PASS | actual=352330dd7e295665d30c3234164526e49ff1d04ecc50d9bd739a662aa02e23b4 expected=352330dd7e295665d30c3234164526e49ff1d04ecc50d9bd739a662aa02e23b4 |
+| A | release manifest dimensions agree | PASS | manifest=1238×337 |
+| B | source dimensions | PASS | 1238×337 |
+| B | source/web column order identical | PASS | mismatch index=None |
+| B | source/web values equivalent | PASS | mismatches=[]; max numeric serialization delta=8.88e-16 |
+| C | HTML IDs unique | PASS | 142 IDs |
+| C | static JS DOM references resolve | PASS | missing=[] |
+| C | scientific journey sections present | PASS | missing=[] |
+| C | data path is local JSON | PASS | client data path |
+| C | free-form chat wired | PASS | chat form |
+| C | navigation history wired | PASS | browser history |
+| C | collapsible/mobile navigation wired | PASS | navigation controls |
+| D | all static chart containers have render paths | PASS | missing=[] |
+| D | dynamic chart targets explicitly handled | PASS | modalPlot is a static modal mount; chatPlot is created dynamically by chatVisual() |
+| D | chart maximize contract | PASS | maximize/fullscreen |
+| D | no-data contract | PASS | evidence-aware empty state |
+| D | plot calls include explanation argument | PASS | calls_with_explanation=34 static=34 |
+| D | explanation contract | PASS | universal guide injection |
+| D | every static chart has a guide entry | PASS | missing=[] |
+| E | control exists: fDomain | PASS | present=True |
+| E | control exists: fEnvironment | PASS | present=True |
+| E | control exists: fTopt | PASS | present=True |
+| E | control exists: fPh | PASS | present=True |
+| E | control exists: fMet | PASS | present=True |
+| E | control exists: mlPathway | PASS | present=True |
+| E | control exists: mlPredictors | PASS | present=True |
+| E | control exists: mlValidation | PASS | present=True |
+| E | control exists: mlThreshold | PASS | present=True |
+| E | control exists: sbTemp | PASS | present=True |
+| E | control exists: sbPH | PASS | present=True |
+| E | control exists: sbSal | PASS | present=True |
+| E | control exists: sbPressure | PASS | present=True |
+| E | control exists: sbO2 | PASS | present=True |
+| E | control exists: sbH2 | PASS | present=True |
+| E | control exists: sbCO2 | PASS | present=True |
+| E | control exists: sbSulfate | PASS | present=True |
+| E | control exists: sbSulfur | PASS | present=True |
+| E | control exists: sbIron | PASS | present=True |
+| E | control exists: chatQuestion | PASS | present=True |
+| E | field explorer drilldown | PASS | field detail path |
+| E | record drilldown | PASS | record detail path |
+| E | metabolism search | PASS | search path |
+| E | environment scenario updates inputs | PASS | scenario logic |
+| F | ML target count: methanogenesis | PASS | web=52 expected=52 |
+| F | ML target count: sulfate reduction | PASS | web=77 expected=77 |
+| F | ML target count: sulfur reduction | PASS | web=113 expected=113 |
+| F | ML target count: iron reduction | PASS | web=26 expected=26 |
+| F | ML target count: fermentation | PASS | web=152 expected=152 |
+| F | ML target count: hydrogen oxidation | PASS | web=23 expected=23 |
+| F | model comparison release present | PASS | rows=18 |
+| F | grouped validation release present | PASS | rows=6 |
+| F | OOF row count | PASS | rows=1238 |
+| G | 14/14 has non-probabilistic framing | PASS | mentions=3, explicit_negation=True |
+| G | external links use HTTPS | PASS | [] |
+| G | original NASA dataset link present | PASS | NASA/AHED link |
+| H | responsive CSS present | PASS | media queries |
+| H | horizontal overflow guarded | PASS | overflow protection |
+| H | focus states present | PASS | keyboard focus |
+| H | theme support present | PASS | light/dark mode |
+| H | payload size under 35 MB | PASS | 24.84 MB |
+
+## Audit principle
+This is a release gate, not a visual substitute for live-browser inspection. New failure modes should become new automated checks rather than relying on memory.
