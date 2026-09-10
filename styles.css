@@ -11,7 +11,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 /* v12 interaction, evidence and layout hardening */
 :root.sidebar-collapsed{--sidebar:78px}
 .sidebar-collapsed .sidebar{padding-left:10px;padding-right:10px}
-.sidebar-collapsed .side-title span,.sidebar-collapsed .nav:not(.active){font-size:0}
+.sidebar-collapsed .side-title span,.sidebar-collapsed .nav{font-size:0}
 .sidebar-collapsed .side-title span{display:none}
 .sidebar-collapsed .nav{justify-content:center;padding-left:6px;padding-right:6px}
 .sidebar-collapsed .nav span{width:auto;font-size:9px}
@@ -138,8 +138,8 @@ body.modal-open,body.chat-open{overflow:hidden}.mobile-nav-toggle{display:none;b
 html{scroll-padding-top:78px}
 .view{scroll-margin-top:78px}
 .sidebar-collapsed .nav{position:relative}
-.sidebar-collapsed .nav:not(.active)::after{content:attr(data-label);position:absolute;left:58px;top:50%;transform:translateY(-50%);background:var(--dark);color:#fff;border:1px solid #4a5547;border-radius:7px;padding:7px 9px;font:500 9px 'DM Mono';white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;z-index:100}
-.sidebar-collapsed .nav:not(.active):hover::after{opacity:1}
+.sidebar-collapsed .nav::after{content:attr(data-label);position:absolute;left:58px;top:50%;transform:translateY(-50%);background:var(--dark);color:#fff;border:1px solid #4a5547;border-radius:7px;padding:7px 9px;font:500 9px 'DM Mono';white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;z-index:100}
+.sidebar-collapsed .nav:hover::after{opacity:1}
 .relationship-summary{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.relationship-summary span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:8px}.relationship-summary span b{margin-right:4px}
 .drill-actions{margin-top:8px}.mini-action{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 8px;font:500 8px 'DM Mono';cursor:pointer}.mini-action:hover{border-color:var(--good)}
 .oxygen-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:9px}.oxygen-detail-grid>div{display:grid;gap:5px}.oxygen-detail-grid strong{font:500 8px 'DM Mono';text-transform:uppercase;color:var(--good)}.oxygen-detail-grid span{font-size:9px}
