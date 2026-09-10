@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ThermoBase — Scientific Observatory</title>
+<meta name="description" content="ThermoBase scientific observatory: explore extremophile physiology, evidence, metabolism, modelling and planetary habitability.">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="topbar">
+  <div class="brand"><span class="mark">TB</span><span>THERMOBASE</span></div>
+  <div class="top-actions"><span id="dataStatus">loading evidence…</span><button id="resetFilters">Reset filters</button></div>
+</header>
+
+<div class="app">
+<aside class="sidebar">
+  <div class="side-title">Scientific observatory</div>
+  <button class="nav active" data-view="overview"><span>01</span>Overview</button>
+  <button class="nav" data-view="physiology"><span>02</span>Physiological space</button>
+  <button class="nav" data-view="environment"><span>03</span>Environments</button>
+  <button class="nav" data-view="metabolism"><span>04</span>Metabolism & chemistry</button>
+  <button class="nav" data-view="evidence"><span>05</span>Evidence & quality</button>
+  <button class="nav" data-view="analysis"><span>06</span>Structure & analysis</button>
+  <button class="nav" data-view="ml"><span>07</span>ML laboratory</button>
+  <button class="nav" data-view="worlds"><span>08</span>Planetary hypotheses</button>
+  <div class="sidebar-bottom">
+    <div class="tiny">DATA RELEASE</div><b>v74 ML · v75 integration</b>
+    <div class="tiny">1,238 records · 337 fields</div>
+  </div>
+</aside>
+
+<main>
+<section id="overview" class="view active">
+  <div class="hero">
+    <div class="eyebrow">ThermoBase scientific observatory</div>
+    <h1>From a database<br>to a <em>reasoning system.</em></h1>
+    <p class="lede">Explore how terrestrial extremophile physiology connects environmental conditions, metabolism, chemical transformations and the interpretation of habitability beyond Earth.</p>
+    <div class="hero-metrics">
+      <div><strong>1,238</strong><span>organisms</span></div><div><strong>337</strong><span>structured fields</span></div><div><strong>3</strong><span>domains</span></div><div><strong>v75</strong><span>integrated release</span></div>
+    </div>
+  </div>
+  <div class="section-head"><div><span class="tag">Start with the evidence</span><h2>What is actually in the database?</h2></div><p>Before modelling anything, we need to understand the sampling structure, physiological coverage and missingness.</p></div>
+  <div class="grid two">
+    <article class="card"><div class="card-head"><h3>Who is represented?</h3><span>EDA</span></div><div id="overviewDomain" class="plot"></div><p class="interpret">A strong bacterial/archaeal dominance means taxonomy can become a powerful confounder in downstream prediction.</p></article>
+    <article class="card"><div class="card-head"><h3>Where are they from?</h3><span>EDA</span></div><div id="overviewEco" class="plot"></div><p class="interpret">The environmental sampling frame is uneven. That matters when asking whether physiology is environment-driven.</p></article>
+  </div>
+  <div class="insight"><b>Scientific question</b><span>Do recurring physiological patterns reflect environmental constraints — or simply the lineages that happen to occupy those environments?</span><button data-jump="physiology">Explore physiological space →</button></div>
+</section>
+
+<section id="physiology" class="view">
+ <div class="section-head"><div><span class="tag">Dashboard 01 · Physiological space</span><h2>Explore the niche landscape.</h2></div><p>Filter the 1,238 organisms and see the physiological space respond. The same filters propagate through the observatory.</p></div>
+ <div class="filterbar">
+   <label>Domain<select id="fDomain"><option value="">All</option><option>Bacteria</option><option>Archaea</option><option>Eukaryota</option></select></label>
+   <label>Environment<select id="fEnvironment"><option value="">All environments</option></select></label>
+   <label>Minimum Topt<input id="fTopt" type="number" placeholder="°C"></label>
+   <label>Maximum pH<input id="fPh" type="number" placeholder="pH"></label>
+ </div>
+ <div class="kpis" id="physKpis"></div>
+ <div class="grid two">
+  <article class="card big"><div class="card-head"><h3>Temperature × pH</h3><span>each point = one organism</span></div><div id="physScatter" class="plot tall"></div><p class="interpret">This is the core physiological map. Select a point to inspect the organism; filter it to ask where particular metabolic or taxonomic niches sit.</p></article>
+  <article class="card"><div class="card-head"><h3>Thermal niche distribution</h3><span>Topt</span></div><div id="physThermal" class="plot"></div><div id="thermalSummary" class="summary"></div></article>
+ </div>
+ <div class="grid three">
+  <article class="card"><h3>Temperature coverage</h3><div id="tempCoverage" class="plot small"></div></article>
+  <article class="card"><h3>pH coverage</h3><div id="phCoverage" class="plot small"></div></article>
+  <article class="card"><h3>Selected records</h3><div id="physList" class="list"></div></article>
+ </div>
+ <div class="insight"><b>Question raised</b><span>Environmental compatibility is not one-dimensional. Which environmental combinations recur — and which are missing because they were never measured?</span><button data-jump="environment">Open environment dashboard →</button></div>
+</section>
+
+<section id="environment" class="view">
+ <div class="section-head"><div><span class="tag">Dashboard 02 · Environment</span><h2>What environments select for which physiology?</h2></div><p>Move from organism-level observations to environmental context. Compare environments without losing the underlying records.</p></div>
+ <div class="grid two">
+  <article class="card big"><div class="card-head"><h3>Environmental representation</h3><span>top categories</span></div><div id="envChart" class="plot tall"></div></article>
+  <article class="card"><div class="card-head"><h3>Environment × optimum temperature</h3><span>median Topt</span></div><div id="envTemp" class="plot tall"></div></article>
+ </div>
+ <div class="grid two">
+  <article class="card"><div class="card-head"><h3>Oxygen requirement</h3></div><div id="oxygenChart" class="plot"></div></article>
+  <article class="card"><div class="card-head"><h3>Taxonomic structure</h3></div><div id="phylumChart" class="plot"></div></article>
+ </div>
+ <div class="insight"><b>Analytical transition</b><span>Environment and lineage are entangled. That is precisely why the next stage needs explicit statistical controls rather than visual association alone.</span><button data-jump="analysis">Examine structure →</button></div>
+</section>
+
+<section id="metabolism" class="view">
+ <div class="section-head"><div><span class="tag">Dashboard 03 · Metabolism & chemistry</span><h2>What does life do with the environment?</h2></div><p>Metabolism is where environmental conditions become chemical transformations. The chemical layer distinguishes evidence from inference.</p></div>
+ <div class="met-filter"><label>Search metabolism<input id="metSearch" placeholder="methanogenesis, sulfate…"></label></div>
+ <div class="grid two">
+  <article class="card big"><div class="card-head"><h3>Metabolic capabilities</h3><span>curated labels</span></div><div id="metChart" class="plot tall"></div></article>
+  <article class="card"><div class="card-head"><h3>Chemical evidence disposition</h3><span>role adjudication</span></div><div id="chemChart" class="plot tall"></div></article>
+ </div>
+ <div class="pathway-grid" id="pathwayCards"></div>
+ <div class="insight"><b>Question raised</b><span>If environmental conditions constrain metabolism, can we predict metabolic niches from environment — and determine whether the relationship generalizes beyond taxonomy?</span><button data-jump="ml">Enter ML laboratory →</button></div>
+</section>
+
+<section id="evidence" class="view">
+ <div class="section-head"><div><span class="tag">Dashboard 04 · Evidence & quality</span><h2>How much can we trust each layer?</h2></div><p>ThermoBase treats missingness and uncertainty as scientific information. Original S1 is immutable; augmentations retain provenance.</p></div>
+ <div class="grid two">
+  <article class="card"><div class="card-head"><h3>Missingness by physiological field</h3></div><div id="missingChart" class="plot tall"></div></article>
+  <article class="card"><div class="card-head"><h3>Final record-level QC</h3></div><div id="qualityChart" class="plot tall"></div></article>
+ </div>
+ <div class="evidence-cards">
+  <div><b>1 unresolved taxonomy identity</b><p>Bacillus sp. IFA 119: no strain-specific authoritative TaxID established.</p></div>
+  <div><b>1 pressure source exception</b><p>Methanothermobacter wolfeii SIV6: original value retained, source-cell support unresolved.</p></div>
+  <div><b>Ambiguous chemistry retained</b><p>A compound appearing in a source field is not automatically assigned as donor, acceptor, substrate or product.</p></div>
+ </div>
+ <div class="schema"><h3>The 337-field architecture</h3><div id="schemaChart" class="plot"></div></div>
+ <div class="insight"><b>Scientific consequence</b><span>Once the evidence layer is explicit, modelling can distinguish measured biology from database structure — and failure modes become interpretable.</span><button data-jump="analysis">Continue to analysis →</button></div>
+</section>
+
+<section id="analysis" class="view">
+ <div class="section-head"><div><span class="tag">Dashboard 05 · Structure & analysis</span><h2>Find structure before making predictions.</h2></div><p>Thermal breadth, pH breadth, salinity, pressure and taxonomy form a multidimensional physiological space. Descriptive structure is not causation — but it defines the questions the models can test.</p></div>
+ <div class="grid two">
+  <article class="card"><div class="card-head"><h3>Optimum-temperature distribution</h3></div><div id="analysisThermal" class="plot"></div></article>
+  <article class="card"><div class="card-head"><h3>pH envelope</h3></div><div id="analysisPh" class="plot"></div></article>
+ </div>
+ <div class="analysis-note"><div><b>Thermal breadth</b><span>Tmax − Tmin where the envelope is available.</span></div><div><b>pH breadth</b><span>pHmax − pHmin where the envelope is available.</span></div><div><b>Salinity</b><span>Normalized analytical field with special handling for non-NaCl and upper bounds.</span></div><div><b>Pressure</b><span>Separate pressure-at-optimum-temperature and optimum-pressure fields are preserved.</span></div></div>
+ <div class="question-panel"><span>THE MODELING QUESTION</span><h3>Can environmental characteristics predict metabolic niches?</h3><p>And more importantly: <strong>does that prediction survive when entire phyla are held out?</strong></p><button data-jump="ml">Test it →</button></div>
+</section>
+
+<section id="ml" class="view">
+ <div class="section-head"><div><span class="tag">Dashboard 06 · Machine learning laboratory</span><h2>Prediction is only the beginning.</h2></div><p>Compare environment-only, taxonomy-only and combined models. Then switch to the harder lineage-controlled experiment.</p></div>
+ <div class="segmented"><button class="active" data-ml="random">Random 5-fold</button><button data-ml="grouped">Phylum-grouped stress test</button></div>
+ <div id="mlHeader" class="ml-header"></div>
+ <div class="card"><div id="mlChart" class="plot tall"></div></div>
+ <div class="grid two">
+  <article class="card"><div class="card-head"><h3>Extreme thermal niche</h3><span>Topt ≥80 °C</span></div><div id="extremeChart" class="plot"></div></article>
+  <article class="card"><div class="card-head"><h3>What the stress test changes</h3></div><div id="mlInsight" class="ml-insight"></div></article>
+ </div>
+ <div class="question-panel dark"><span>INTERPRETATION</span><h3>The model can reveal both signal <em>and the limits of inference.</em></h3><p>H₂ oxidation collapses under lineage control; methanogenesis cannot be estimated because all 52 positives are Euryarchaeota. Those are findings, not defects to hide.</p><button data-jump="worlds">Transfer the framework to planetary environments →</button></div>
+</section>
+
+<section id="worlds" class="view">
+ <div class="section-head"><div><span class="tag">Dashboard 07 · Planetary hypotheses</span><h2>Leave Earth without leaving the evidence chain.</h2></div><p>Planetary science is not a search for a single “habitable planet.” It is a search for environments, metabolic possibilities, chemical consequences and observations that discriminate hypotheses.</p></div>
+ <div class="world-tabs"><button class="active" data-world="enceladus">Enceladus</button><button data-world="europa">Europa</button><button data-world="mars">Mars</button><button data-world="trappist">TRAPPIST-1 e</button><button data-world="k218">K2-18 b</button><button data-world="earth">Earth benchmark</button></div>
+ <div id="worldPanel"></div>
+ <div class="grid two">
+  <article class="card"><div class="card-head"><h3>Competing metabolic pathways</h3><span>Enceladus case study</span></div><div id="worldPathways" class="plot tall"></div></article>
+  <article class="card"><div class="card-head"><h3>From pathway to measurement</h3></div><div class="chain"><div>environment</div><i>→</i><div>metabolic niche</div><i>→</i><div>chemical transformation</div><i>→</i><div>biosignature hypothesis</div><i>→</i><div>abiotic test</div></div></article>
+ </div>
+ <div class="question-panel"><span>THE RESEARCH FRONTIER</span><h3>Which future observation would most reduce uncertainty?</h3><p>ThermoBase does not answer this by declaring life. It helps define the environmental–metabolic pathways whose chemical consequences can be tested.</p></div>
+</section>
+
+</main>
+</div>
+
+
+<button id="chatFab" aria-label="Open ThermoBase research chat">⌁ <span>Research chat</span></button>
+<aside id="researchChat" class="research-chat" aria-hidden="true">
+  <div class="chat-head">
+    <div><span class="chat-kicker">THERMOBASE RESEARCH</span><h2>Ask the dataset.</h2></div>
+    <button id="chatClose">×</button>
+  </div>
+  <div class="chat-context" id="chatContext">Current context: all records</div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg assistant">
+      <b>ThermoBase</b>
+      <p>Ask questions about the ThermoBase dataset, QC, analyses, ML results or planetary case studies. Answers come from the project's research data and documented results — not a general-purpose chatbot.</p>
+      <div class="chat-chips">
+        <button data-chatq="How many organisms are in ThermoBase?">Dataset size</button>
+        <button data-chatq="How complete are the thermal envelopes?">Thermal QC</button>
+        <button data-chatq="What did the lineage-controlled ML test show?">ML stress test</button>
+        <button data-chatq="Why is Enceladus interesting for methanogenesis?">Enceladus</button>
+      </div>
+    </div>
+  </div>
+  <div class="chat-visual" id="chatVisual"></div>
+  <form class="chat-input" id="chatForm">
+    <textarea id="chatQuestion" rows="2" placeholder="Ask a research question…"></textarea>
+    <button type="submit">Send</button>
+  </form>
+  <div class="chat-foot">Answers are retrieved from the ThermoBase research layer. Unknown or unsupported claims are identified rather than invented.</div>
+</aside>
+
+
+<script src="app.js"></script>
+</body></html>
