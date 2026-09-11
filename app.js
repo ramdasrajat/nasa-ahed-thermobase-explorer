@@ -11,7 +11,6 @@ const $=s=>document.querySelector(s);
 const $$=s=>Array.from(document.querySelectorAll(s));
 const DOMAIN_COLORS={Bacteria:'#4f7cac',Archaea:'#6f9f6a',Eukaryota:'#b47ab4'};
 const SECTION_ORDER=['overview','physiology','environment','metabolism','evidence','analysis','ml','sandbox','worlds','synthesis'];
-function updateProgress(id){const el=$('#progress');if(!el)return;const i=SECTION_ORDER.indexOf(id);const pct=i<0?0:((i+1)/SECTION_ORDER.length)*100;el.style.width=pct+'%'}
 const cfg={responsive:true,displaylogo:false,scrollZoom:true};
 const layout={paper_bgcolor:'transparent',plot_bgcolor:'transparent',font:{family:'Inter,Arial,sans-serif',color:'#62695f',size:11},margin:{l:62,r:24,t:52,b:54},autosize:true,hoverlabel:{font:{size:11}},legend:{font:{size:10}}};
 const num=v=>v==null||v===''||v==='NA'||v==='null'?null:Number(v);
@@ -156,7 +155,18 @@ function showFieldModal(f){const m=fieldCache.find(x=>x.name===f.name)||f;$('#mo
 function closeModal(){['chartModal','modalBackdrop'].forEach(id=>$('#'+id)?.classList.remove('open'));document.body.classList.remove('modal-open');$('#chartModal')?.setAttribute('aria-hidden','true');$('#chartModal')?.removeAttribute('aria-modal');if($('#modalPlot')&&window.Plotly)Plotly.purge('modalPlot')}
 function enrichCards(){ $$('.plot').forEach(el=>{const card=el.closest('.card');if(!card)return;let head=card.querySelector('.card-head');if(!head)return;let b=head.querySelector('.expand-chart');if(!b){b=document.createElement('button');b.className='expand-chart';b.type='button';b.textContent='↗ Maximize';b.setAttribute('aria-label',`Maximize ${chartTitle(el.id)}`);b.onclick=()=>openModal(el.id);head.appendChild(b)}b.disabled=el.dataset.noData==='1';ensureGuide(el.id);});}
 function filtered(){if(!D)return[];const dom=$('#fDomain')?.value||'',env=$('#fEnvironment')?.value||'',t=num($('#fTopt')?.value),ph=num($('#fPh')?.value),met=$('#fMet')?.value||'';return D.records.filter(r=>(!dom||r.domain===dom)&&(!env||r.environment===env)&&(t==null||num(r.avg_optimum_temp_c)>=t)&&(ph==null||num(r.avg_optimum_ph)<=ph)&&(!met||hasPath(r,met)))}
-function go(id,opts={push:true}){if(!$('#'+id))id='overview';$$('.view').forEach(v=>v.classList.remove('active'));$('#'+id).classList.add('active');$$('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(opts.push&&location.hash.slice(1)!==id)history.pushState(null,'','#'+id);window.scrollTo({top:0,behavior:'auto'});updateProgress(id);renderView(id);updateChatContext();if(document.documentElement.classList.contains('mobile-nav-open'))document.documentElement.classList.remove('mobile-nav-open')}
+function go(id,opts={push:true}){const el=$('#'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});$$('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(opts.push&&location.hash.slice(1)!==id)history.pushState(null,'','#'+id);updateChatContext();if(document.documentElement.classList.contains('mobile-nav-open'))document.documentElement.classList.remove('mobile-nav-open')}
+function initScrollSpy(){
+ const sections=$$('.view');if(!sections.length)return;
+ if(!('IntersectionObserver' in window))return;
+ const spy=new IntersectionObserver(entries=>{entries.forEach(en=>{if(en.isIntersecting){const id=en.target.id;$$('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(location.hash.slice(1)!==id)history.replaceState(null,'','#'+id)}})},{rootMargin:'-35% 0px -55% 0px',threshold:0});
+ sections.forEach(s=>spy.observe(s));
+}
+function initScrollProgress(){
+ const el=$('#progress');if(!el)return;
+ const update=()=>{const h=document.documentElement.scrollHeight-window.innerHeight;const pct=h>0?Math.min(100,(window.scrollY/h)*100):0;el.style.width=pct+'%'};
+ window.addEventListener('scroll',update,{passive:true});update();
+}
 function countPathways(a=D.records){const c={};a.forEach(r=>pathwaysOf(r).forEach(p=>c[p]=(c[p]||0)+1));return c}
 function populateFilters(){const e=$('#fEnvironment'),m=$('#fMet');Object.keys(countBy(D.records,'environment')).sort().forEach(x=>e?.insertAdjacentHTML('beforeend',`<option value="${esc(x)}">${esc(x)}</option>`));Object.entries(countPathways()).sort((a,b)=>b[1]-a[1]).forEach(([x,n])=>m?.insertAdjacentHTML('beforeend',`<option value="${esc(x)}">${esc(x)} (${n})</option>`));if($('#mlEnvironment'))Object.keys(countBy(D.records,'environment')).sort().forEach(x=>$('#mlEnvironment').insertAdjacentHTML('beforeend',`<option value="${esc(x)}">${esc(x)}</option>`));if($('#mlOxygen')){const oxy=Object.keys(countBy(D.records,'oxygen_requirement')).sort();oxy.forEach(x=>$('#mlOxygen').insertAdjacentHTML('beforeend',`<option value="${esc(x)}">${esc(x)}</option>`))}}
 function wireClick(id,fn){const el=$('#'+id);if(!el)return;el.removeAllListeners?.('plotly_click');el.on('plotly_click',fn)}
@@ -421,7 +431,11 @@ async function loadDataWithProgress(url){
  if(bar)bar.style.width='100%';if(pct)pct.textContent='Parsing…';
  const blob=new Blob(chunks);const text=await blob.text();return JSON.parse(text);
 }
-function boot(){bindWorldTabs();loadDataWithProgress('data/thermobase.json').then(x=>{D=x;buildFieldCache();$('#dataStatus').textContent=`research layer · ${D.meta.records.toLocaleString()} records · ${D.meta.columns} fields`;populateFilters();const saved=localStorage.getItem('tb-theme');if(saved==='dark'){document.documentElement.dataset.theme='dark';$('#themeToggle').textContent='Light mode'}const sb=localStorage.getItem('tb-sidebar');if(sb==='collapsed'){document.documentElement.classList.add('sidebar-collapsed');$('#sidebarToggle').textContent='›'}bind();$('#shareView')?.addEventListener('click',()=>{const url=location.href;navigator.clipboard?.writeText(url).then(()=>{const b=$('#shareView');if(!b)return;const old=b.textContent;b.textContent='Link copied!';setTimeout(()=>b.textContent=old,1600)}).catch(()=>{prompt('Copy this link:',url)})});go(location.hash.slice(1)||'overview');const ov=$('#loadOverlay');if(ov){ov.classList.add('hidden');setTimeout(()=>ov.remove(),350)}}).catch(e=>{console.error(e);$('#dataStatus').textContent='data load failed';const pct=$('#loadPct');if(pct)pct.textContent='Data load failed — check your connection and reload.'})}
+function boot(){bindWorldTabs();loadDataWithProgress('data/thermobase.json').then(x=>{D=x;buildFieldCache();$('#dataStatus').textContent=`research layer · ${D.meta.records.toLocaleString()} records · ${D.meta.columns} fields`;populateFilters();const saved=localStorage.getItem('tb-theme');if(saved==='dark'){document.documentElement.dataset.theme='dark';$('#themeToggle').textContent='Light mode'}const sb=localStorage.getItem('tb-sidebar');if(sb==='collapsed'){document.documentElement.classList.add('sidebar-collapsed');$('#sidebarToggle').textContent='›'}bind();$('#shareView')?.addEventListener('click',()=>{const url=location.href;navigator.clipboard?.writeText(url).then(()=>{const b=$('#shareView');if(!b)return;const old=b.textContent;b.textContent='Link copied!';setTimeout(()=>b.textContent=old,1600)}).catch(()=>{prompt('Copy this link:',url)})});
+ SECTION_ORDER.forEach(v=>renderView(v));
+ initScrollSpy();initScrollProgress();
+ const target=location.hash.slice(1)||'overview';if($('#'+target))setTimeout(()=>go(target,{push:false}),120);
+ const ov=$('#loadOverlay');if(ov){ov.classList.add('hidden');setTimeout(()=>ov.remove(),350)}}).catch(e=>{console.error(e);$('#dataStatus').textContent='data load failed';const pct=$('#loadPct');if(pct)pct.textContent='Data load failed — check your connection and reload.'})}
 function initScrollReveal(){
  const els=$$('.ov-reveal');if(!els.length)return;
  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
