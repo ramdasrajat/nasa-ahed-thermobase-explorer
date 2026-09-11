@@ -177,48 +177,63 @@ html{scroll-padding-top:78px}
 .share-link{border:1px solid var(--line);background:var(--card);border-radius:7px;cursor:pointer;font-size:10px;padding:8px 10px}
 .share-link:hover{border-color:var(--good);color:var(--good)}
 
-/* ===== REDESIGN PASS — overview section only (visual identity: thermal-gradient palette, Fraunces/IBM Plex type, margin-note editorial layout) ===== */
-#overview{
+/* ===== REDESIGN — shared editorial visual identity. Add class="redesigned" to any .view section to opt it in (thermal-gradient palette, Fraunces/IBM Plex type, margin-note layout, sticky feature, scroll reveal) ===== */
+.redesigned{
  --ov-bg:#F4EFE6; --ov-ink:#20221c; --ov-muted:#6b6a5e; --ov-line:#ddd7c8;
  --ov-panel:#eae4d4; --ov-card:#fbf9f2; --ov-cold:#2C4A6E; --ov-hot:#B8452F;
  font-family:'IBM Plex Sans',Inter,Arial,sans-serif;
 }
-#overview.view{overflow:visible;background:var(--ov-bg);color:var(--ov-ink);border-radius:14px;margin-top:-10px;padding-top:44px}
-#overview .eyebrow{font:500 12px/1.4 'IBM Plex Sans';letter-spacing:0;text-transform:none;color:var(--ov-hot)}
-#overview .hero h1{font:500 clamp(40px,5.6vw,72px)/1.05 'Fraunces';letter-spacing:-.02em;color:var(--ov-ink)}
-#overview .hero h1 em{font-style:italic;color:var(--ov-hot)}
-#overview .thermal-rule{height:3px;width:150px;margin:6px 0 26px;border-radius:99px;background:linear-gradient(90deg,var(--ov-cold),var(--ov-hot))}
-#overview .lede{font:400 17px/1.6 'IBM Plex Sans';color:var(--ov-muted);max-width:640px}
-#overview .hero-metrics{border-color:var(--ov-line)}
-#overview .hero-metrics div{border-color:var(--ov-line)}
-#overview .hero-metrics strong{font:500 26px 'Fraunces';color:var(--ov-ink)}
-#overview .hero-metrics span{font:500 9px 'IBM Plex Mono';color:var(--ov-muted)}
-#overview .hero-teaser{background:var(--ov-card);border-color:var(--ov-line);color:var(--ov-ink)}
-#overview .hero-teaser b{color:var(--ov-hot);font:500 10px 'IBM Plex Sans';text-transform:none;letter-spacing:0}
-#overview .hero-teaser a{color:var(--ov-ink);border-color:var(--ov-line)}
-#overview .hero-teaser a:hover{border-color:var(--ov-hot);color:var(--ov-hot)}
-#overview .story-strip{background:var(--ov-panel);border-color:var(--ov-line)}
-#overview .story-strip b{color:var(--ov-hot);font:500 11px 'IBM Plex Mono'}
-#overview .story-strip span{font:500 14px 'Fraunces';color:var(--ov-ink)}
-#overview .story-strip small{color:var(--ov-muted)}
-#overview .story-strip i{color:var(--ov-muted)}
-#overview .tag{font:500 11px 'IBM Plex Sans';letter-spacing:0;text-transform:none;color:var(--ov-hot)}
-#overview h2{font:500 clamp(26px,3.4vw,40px)/1.12 'Fraunces';letter-spacing:-.01em;color:var(--ov-ink)}
-#overview .card,#overview .question-panel{background:var(--ov-card);border-color:var(--ov-line);box-shadow:none}
-#overview .card-head h3,#overview h3{font:500 16px 'Fraunces';color:var(--ov-ink)}
-#overview .card-head span{font:500 9px 'IBM Plex Mono';color:var(--ov-muted);text-transform:none}
-#overview .explain b{color:var(--ov-hot);text-transform:none;letter-spacing:0}
-#overview .explain p{color:var(--ov-muted)}
-#overview .detail{background:var(--ov-panel);color:var(--ov-muted)}
-#overview .detail b{color:var(--ov-ink)}
-#overview .source-note a{color:var(--ov-hot)}
-#overview .question-panel h3{font:500 24px/1.3 'Fraunces';color:var(--ov-ink)}
-#overview .question-panel p{color:var(--ov-muted)}
-#overview .question-panel button{background:var(--ov-ink);font:500 11px 'IBM Plex Sans'}
-#overview .ov-feature{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:start;margin:76px 0}
-#overview .ov-feature-sticky{position:sticky;top:96px}
-#overview .ov-feature-text p{font:400 15px/1.7 'IBM Plex Sans';color:var(--ov-ink);max-width:62ch;margin:14px 0}
-#overview .ov-feature-text .tag{display:block;margin-bottom:4px}
-#overview .ov-reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
-#overview .ov-reveal.in{opacity:1;transform:none}
-@media(max-width:900px){#overview .ov-feature{grid-template-columns:1fr}#overview .ov-feature-sticky{position:static}}
+.redesigned.view{overflow:visible;background:var(--ov-bg);color:var(--ov-ink);border-radius:14px;margin-top:-10px;padding-top:44px}
+.redesigned .eyebrow{font:500 12px/1.4 'IBM Plex Sans';letter-spacing:0;text-transform:none;color:var(--ov-hot)}
+.redesigned .hero h1{font:500 clamp(40px,5.6vw,72px)/1.05 'Fraunces';letter-spacing:-.02em;color:var(--ov-ink)}
+.redesigned .hero h1 em{font-style:italic;color:var(--ov-hot)}
+.redesigned .thermal-rule{height:3px;width:150px;margin:6px 0 26px;border-radius:99px;background:linear-gradient(90deg,var(--ov-cold),var(--ov-hot))}
+.redesigned .lede{font:400 17px/1.6 'IBM Plex Sans';color:var(--ov-muted);max-width:640px}
+.redesigned .hero-metrics{border-color:var(--ov-line)}
+.redesigned .hero-metrics div{border-color:var(--ov-line)}
+.redesigned .hero-metrics strong{font:500 26px 'Fraunces';color:var(--ov-ink)}
+.redesigned .hero-metrics span{font:500 9px 'IBM Plex Mono';color:var(--ov-muted)}
+.redesigned .hero-teaser{background:var(--ov-card);border-color:var(--ov-line);color:var(--ov-ink)}
+.redesigned .hero-teaser b{color:var(--ov-hot);font:500 10px 'IBM Plex Sans';text-transform:none;letter-spacing:0}
+.redesigned .hero-teaser a{color:var(--ov-ink);border-color:var(--ov-line)}
+.redesigned .hero-teaser a:hover{border-color:var(--ov-hot);color:var(--ov-hot)}
+.redesigned .story-strip{background:var(--ov-panel);border-color:var(--ov-line)}
+.redesigned .story-strip b{color:var(--ov-hot);font:500 11px 'IBM Plex Mono'}
+.redesigned .story-strip span{font:500 14px 'Fraunces';color:var(--ov-ink)}
+.redesigned .story-strip small{color:var(--ov-muted)}
+.redesigned .story-strip i{color:var(--ov-muted)}
+.redesigned .tag{font:500 11px 'IBM Plex Sans';letter-spacing:0;text-transform:none;color:var(--ov-hot)}
+.redesigned h2{font:500 clamp(26px,3.4vw,40px)/1.12 'Fraunces';letter-spacing:-.01em;color:var(--ov-ink)}
+.redesigned .card,.redesigned .question-panel{background:var(--ov-card);border-color:var(--ov-line);box-shadow:none}
+.redesigned .card-head h3,.redesigned h3{font:500 16px 'Fraunces';color:var(--ov-ink)}
+.redesigned .card-head span{font:500 9px 'IBM Plex Mono';color:var(--ov-muted);text-transform:none}
+.redesigned .explain b{color:var(--ov-hot);text-transform:none;letter-spacing:0}
+.redesigned .explain p{color:var(--ov-muted)}
+.redesigned .detail{background:var(--ov-panel);color:var(--ov-muted)}
+.redesigned .detail b{color:var(--ov-ink)}
+.redesigned .source-note a{color:var(--ov-hot)}
+.redesigned .question-panel h3{font:500 24px/1.3 'Fraunces';color:var(--ov-ink)}
+.redesigned .question-panel p{color:var(--ov-muted)}
+.redesigned .question-panel button{background:var(--ov-ink);font:500 11px 'IBM Plex Sans'}
+.redesigned .ov-feature{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:start;margin:76px 0}
+.redesigned .ov-feature-sticky{position:sticky;top:96px}
+.redesigned .ov-feature-text p{font:400 15px/1.7 'IBM Plex Sans';color:var(--ov-ink);max-width:62ch;margin:14px 0}
+.redesigned .ov-feature-text .tag{display:block;margin-bottom:4px}
+.redesigned .ov-reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.redesigned .ov-reveal.in{opacity:1;transform:none}
+@media(max-width:900px){.redesigned .ov-feature{grid-template-columns:1fr}.redesigned .ov-feature-sticky{position:static}}
+
+/* shared component overrides for any .redesigned section — filters, KPIs, record cards, insight banner, buttons */
+.redesigned .filterbar label{color:var(--ov-muted);font:500 9px 'IBM Plex Sans';text-transform:none}
+.redesigned .filterbar select,.redesigned .filterbar input{background:var(--ov-card);border-color:var(--ov-line);color:var(--ov-ink)}
+.redesigned .kpis>div{background:var(--ov-panel)}
+.redesigned .kpis b{font-family:'Fraunces';color:var(--ov-ink)}
+.redesigned .kpis span{color:var(--ov-muted);font-family:'IBM Plex Mono'}
+.redesigned .record-hit{background:var(--ov-card);border-color:var(--ov-line);color:var(--ov-ink)}
+.redesigned .record-hit b{font-family:'Fraunces'}
+.redesigned .record-hit:hover{border-color:var(--ov-hot)}
+.redesigned .insight{background:var(--ov-ink);color:var(--ov-bg)}
+.redesigned .insight b{color:var(--ov-hot);text-transform:none;font-family:'IBM Plex Sans'}
+.redesigned .insight span{font-family:'Fraunces';font-size:15px}
+.redesigned .insight button,.redesigned button.primary{background:var(--ov-hot);color:#fff;font-family:'IBM Plex Sans'}
+.redesigned .section-head p{color:var(--ov-muted)}
