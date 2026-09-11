@@ -386,4 +386,12 @@ async function loadDataWithProgress(url){
  const blob=new Blob(chunks);const text=await blob.text();return JSON.parse(text);
 }
 function boot(){bindWorldTabs();loadDataWithProgress('data/thermobase.json').then(x=>{D=x;buildFieldCache();$('#dataStatus').textContent=`research layer · ${D.meta.records.toLocaleString()} records · ${D.meta.columns} fields`;populateFilters();const saved=localStorage.getItem('tb-theme');if(saved==='dark'){document.documentElement.dataset.theme='dark';$('#themeToggle').textContent='Light mode'}const sb=localStorage.getItem('tb-sidebar');if(sb==='collapsed'){document.documentElement.classList.add('sidebar-collapsed');$('#sidebarToggle').textContent='›'}bind();$('#shareView')?.addEventListener('click',()=>{const url=location.href;navigator.clipboard?.writeText(url).then(()=>{const b=$('#shareView');if(!b)return;const old=b.textContent;b.textContent='Link copied!';setTimeout(()=>b.textContent=old,1600)}).catch(()=>{prompt('Copy this link:',url)})});go(location.hash.slice(1)||'overview');const ov=$('#loadOverlay');if(ov){ov.classList.add('hidden');setTimeout(()=>ov.remove(),350)}}).catch(e=>{console.error(e);$('#dataStatus').textContent='data load failed';const pct=$('#loadPct');if(pct)pct.textContent='Data load failed — check your connection and reload.'})}
+function initScrollReveal(){
+ const els=$$('.ov-reveal');if(!els.length)return;
+ if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
+ const io=new IntersectionObserver(entries=>{entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+ els.forEach(e=>io.observe(e));
+}
+document.addEventListener('DOMContentLoaded',initScrollReveal);
+if(document.readyState==='interactive'||document.readyState==='complete')initScrollReveal();
 boot();
