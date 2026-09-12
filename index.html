@@ -1,152 +1,164 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ThermoBase — Scientific Observatory</title>
-<meta name="description" content="ThermoBase interactive scientific observatory for extremophile physiology, environment, metabolism, evidence, machine learning and planetary habitability.">
-<link rel="stylesheet" href="styles.css">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThermoBase — does the pattern survive scrutiny?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-</head><body>
-<div id="loadOverlay" class="load-overlay"><div class="mark" style="font:600 20px 'DM Mono';color:var(--good)">TB</div><div class="load-bar"><span id="loadBar"></span></div><small id="loadPct">Connecting…</small></div>
+</head>
+<body>
 <div id="progress"></div>
-<header class="topbar"><button id="mobileNavToggle" class="mobile-nav-toggle" aria-label="Open navigation">☰</button><div class="brand"><span class="mark">TB</span><span>THERMOBASE</span></div><div class="top-actions"><span id="dataStatus">loading…</span><a class="source-link" href="https://ahed.nasa.gov/datasets/e6e6ade4a91fee03d9f99ea19602/t3c34s" target="_blank" rel="noopener">Original NASA dataset ↗</a><button id="themeToggle">Dark mode</button><button id="resetFilters">Reset filters</button><button id="shareView" class="share-link" title="Copy a link to this exact view">Share this view</button></div></header>
-<div class="app">
-<aside class="sidebar"><div class="side-title"><span>Scientific observatory</span><button id="sidebarToggle" aria-label="Collapse navigation" title="Collapse navigation">‹</button></div>
-<button class="nav active" data-view="overview" data-label="Dataset & questions" title="Dataset & questions"><span>01</span>Dataset & questions</button>
-<button class="nav" data-view="physiology" data-label="Physiological space" title="Physiological space"><span>02</span>Physiological space</button>
-<button class="nav" data-view="environment" data-label="Environments" title="Environments"><span>03</span>Environments</button>
-<button class="nav" data-view="metabolism" data-label="Metabolism & chemistry" title="Metabolism & chemistry"><span>04</span>Metabolism & chemistry</button>
-<button class="nav" data-view="evidence" data-label="Evidence & quality" title="Evidence & quality"><span>05</span>Evidence & quality</button>
-<button class="nav" data-view="analysis" data-label="Integrated structure" title="Integrated structure"><span>06</span>Integrated structure</button>
-<button class="nav" data-view="ml" data-label="ML laboratory" title="ML laboratory"><span>07</span>ML laboratory</button>
-<button class="nav" data-view="sandbox" data-label="Environment laboratory" title="Environment laboratory"><span>08</span>Environment laboratory</button>
-<button class="nav" data-view="worlds" data-label="Planetary hypotheses" title="Planetary hypotheses"><span>09</span>Planetary hypotheses</button>
-<button class="nav" data-view="synthesis" data-label="Synthesis & open questions" title="Synthesis & open questions"><span>10</span>Synthesis & open questions</button>
-<div class="sidebar-bottom"><div class="tiny">DATA RELEASE</div><b>v74 ML · v75 integration</b><div class="tiny">1,238 records · 337 fields</div></div></aside>
+<nav class="act-rail" id="actRail">
+  <a href="#act1" data-act="act1"><span class="roman">I</span><span class="stops"><i data-stop="stop-1-1"></i><i data-stop="stop-1-2"></i><i data-stop="stop-1-3"></i></span></a>
+  <a href="#act2" data-act="act2"><span class="roman">II</span><span class="stops"><i data-stop="stop-2-1"></i><i data-stop="stop-2-2"></i><i data-stop="stop-2-3"></i></span></a>
+  <a href="#act3" data-act="act3"><span class="roman">III</span><span class="stops"><i data-stop="stop-3-1"></i><i data-stop="stop-3-2"></i><i data-stop="stop-3-3"></i></span></a>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">ThermoBase — a data investigation</div>
+    <h1>A pattern in this data looked almost too good to be true. It was.</h1>
+    <p class="hero-sub">1,238 extremophile organisms, 337 measured fields. One metabolic pathway looked <b>81% predictable</b> from environment alone — until we controlled for which lineage the organism belonged to, and that number fell to <b>21%</b>. This is how we found that out, and what's still standing once we did.</p>
+    <div class="hero-visual">
+      <div class="hero-bars">
+        <div class="hero-bar grey"><div class="num" id="heroNumRandom">—</div><div class="fill" id="heroFillRandom" style="height:0px"></div><div class="label">Random test</div></div>
+        <div class="hero-bar rust"><div class="num" id="heroNumGrouped">—</div><div class="fill" id="heroFillGrouped" style="height:0px"></div><div class="label">Ancestry-controlled test</div></div>
+      </div>
+      <div class="hero-caption">Same model. Same pathway — hydrogen oxidation. Different question.</div>
+    </div>
+    <div class="scroll-cue">Scroll to see how we know ↓</div>
+  </div>
+</header>
+
 <main>
-<section id="overview" class="view active redesigned">
-<div class="hero"><div class="eyebrow">ThermoBase · v17 scientific observatory</div><h1>From a database<br>to a <em>reasoning system.</em></h1><div class="thermal-rule" aria-hidden="true"></div><p class="lede">Follow the evidence from terrestrial extremophile physiology through environmental structure, metabolism and chemical transformations into machine-learning stress tests and planetary biosignature reasoning.</p><div class="hero-metrics"><div><strong>1,238</strong><span>organisms</span></div><div><strong>337</strong><span>structured fields</span></div><div><strong>3</strong><span>domains</span></div><div><strong>v75</strong><span>integrated release</span></div></div><div class="hero-teaser"><b>Preview finding</b><span>Hydrogen oxidation looks strongly predictable from environment alone — until lineage is controlled for, where that signal collapses.</span><a data-jump="ml">See how we know →</a></div></div>
-<div class="story-strip"><div><b>01</b><span>Observe</span><small>What is actually measured?</small></div><i>→</i><div><b>02</b><span>Connect</span><small>Environment → metabolism</small></div><i>→</i><div><b>03</b><span>Stress-test</span><small>Does structure explain it?</small></div><i>→</i><div><b>04</b><span>Apply</span><small>What can planets teach us?</small></div></div>
 
-<div class="ov-feature ov-reveal">
-<div class="ov-feature-sticky"><article class="card"><div class="card-head"><h3>Who is represented?</h3><span>click bars</span></div><div id="overviewDomain" class="plot"></div><div class="explain"><b>How to read</b><p>Each bar is a domain represented in the curated release. Click a bar to inspect the records behind it.</p><div class="guide-divider"></div><b>What it tells us</b><p>The database is dominated by Bacteria and Archaea; this is a property of the curated evidence base, not a census of life on Earth.</p></div><div id="overviewDomainDetail" class="detail"></div></article></div>
-<div class="ov-feature-text"><span class="tag">Start with the evidence</span><h2>What is actually in the database?</h2><p>Before modelling anything, establish who is represented, what dimensions are populated, and where the evidence is thin. Every pattern the later sections surface — every environment-metabolism link, every machine-learning result, every planetary comparison — is only as trustworthy as this starting sample.</p><p>The curated release leans heavily toward Bacteria and Archaea. That reflects what has been characterized and published in the literature this project draws from, not the true balance of life on Earth. It's worth sitting with that imbalance before anything downstream starts to feel like a discovery about nature rather than a discovery about the dataset.</p></div>
-</div>
+<section class="act" id="act1">
+  <div class="act-head">
+    <div class="act-label"><span class="roman">I</span><span>Can we trust this data before we ask it anything?</span></div>
+    <h2>Before any pattern means something, know what's actually here.</h2>
+    <p class="dek">A biased, unevenly measured sample of extreme-tolerant life on Earth — not a census, and not yet evidence of anything beyond Earth.</p>
+  </div>
 
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Where are they from?</h3><span>click a category</span></div><div id="overviewEco" class="plot"></div><div class="explain"><b>How to read</b><p>Bars rank the most represented ecosystem labels. Click a bar to expose the organisms carrying that label.</p><div class="guide-divider"></div><b>What it tells us</b><p>ThermoBase is unevenly sampled across environments; aquatic labels dominate the current curated release.</p></div><div id="overviewEcoDetail" class="detail"></div></article><article class="card"><div class="card-head"><h3>Where is the evidence thin?</h3><span>missingness</span></div><div id="overviewMissing" class="plot"></div><div class="explain"><b>How to read</b><p>Longer bars mean more records lack that variable. Missingness changes which questions can be answered directly; it is not evidence that the underlying biology is absent.</p></div><div id="overviewMissingDetail" class="detail"></div></article></div>
+  <div class="stop" id="stop-1-1">
+    <div class="stop-num">I.1</div>
+    <h3>The raw material</h3>
+    <p class="lede">ThermoBase curates <b>1,238 organisms</b> across <b>337 structured fields</b> — physiology, environment, metabolism, chemistry, taxonomy, and quality control. Before anything else, this is a sample, shaped by what's been published and characterized, not a random cross-section of life.</p>
+    <div class="stat-row">
+      <div class="stat"><strong id="statRecords">—</strong><span>organisms</span></div>
+      <div class="stat"><strong id="statFields">—</strong><span>measured fields</span></div>
+      <div class="stat"><strong id="statDomains">—</strong><span>domains</span></div>
+    </div>
+    <div class="chart-card"><div id="chartEnv" class="plot"></div>
+      <div class="read"><b>Two environment types account for over a third of records.</b> Hot springs and hydrothermal vents dominate; this reflects where researchers have gone looking, not where extremophile life is most common.</div>
+    </div>
+  </div>
 
-<div class="grid ov-reveal"><article class="card big"><div class="card-head"><h3>337-field architecture</h3><span>drillable</span></div><div id="architectureTree" class="plot"></div><div class="explain"><b>How to read</b><p>Start at ThermoBase, select a field family, then select an individual field. Each level reveals a different layer of the data architecture.</p><div class="guide-divider"></div><b>What it tells us</b><p>The 337 fields are not one flat table conceptually: they span identity, physiology, chemistry, derived analysis and QC/provenance.</p></div><div id="architectureDetail" class="detail"></div><div class="source-note"><a href="https://ahed.nasa.gov/datasets/e6e6ade4a91fee03d9f99ea19602/t3c34s" target="_blank" rel="noopener">Open original NASA AHED ThermoBase dataset ↗</a><span>Original S1 release is preserved as the immutable baseline; this interface adds audited and derived analytical layers.</span></div></article></div>
+  <div class="stop" id="stop-1-2">
+    <div class="stop-num">I.2</div>
+    <h3>What we don't know</h3>
+    <p class="lede">Missing data isn't a footnote — it decides which questions this dataset can even attempt to answer.</p>
+    <div class="chart-card"><div id="chartOxygen" class="plot"></div>
+      <div class="read"><b>Oxygen requirement is unreported for nearly half the database</b> — a larger share than any actual oxygen category. Separately, optimum pressure is missing in 97% of records: pressure is essentially unmeasured across this entire release.</div>
+    </div>
+  </div>
 
-<div class="question-panel ov-reveal"><span class="tag">The first question</span><h3>Do recurring physiological patterns reflect environmental constraints — or the lineages that happen to occupy those environments?</h3><p>The next stages progressively add physiology, environment, chemistry and taxonomy before asking the machine-learning models to separate these effects.</p><button data-jump="physiology">Begin the physiological exploration →</button></div></section>
+  <div class="stop" id="stop-1-3">
+    <div class="stop-num">I.3</div>
+    <h3>The evidence gate</h3>
+    <p class="lede">Before this data gets to say anything about biosignatures on other worlds, it has to pass its own test for how carefully <em>it</em> talks about biosignatures.</p>
+    <div class="chart-card"><div id="chartBiosig" class="plot"></div>
+      <div class="read"><b>Only 39 of 1,238 records carry any candidate biosignature status at all</b> — and most of those are explicitly flagged high false-positive-risk. That's the caution this entire piece has to earn the right to set aside, and only in the one place it's actually justified.</div>
+    </div>
+  </div>
+</section>
 
-<section id="physiology" class="view redesigned">
-<div class="filterbar"><label>Domain<select id="fDomain"><option value="">All</option><option>Bacteria</option><option>Archaea</option><option>Eukaryota</option></select></label><label>Environment<select id="fEnvironment"><option value="">All environments</option></select></label><label>Minimum Topt<input id="fTopt" type="number" placeholder="°C"></label><label>Maximum pH<input id="fPh" type="number" placeholder="pH"></label><label>Metabolism<select id="fMet"><option value="">All pathways</option></select></label></div>
-<div class="kpis" id="physKpis"></div>
+<section class="act" id="act2">
+  <div class="act-head">
+    <div class="act-label"><span class="roman">II</span><span>Does the pattern survive scrutiny?</span></div>
+    <h2>Build the case, then try to break it.</h2>
+    <p class="dek">Physiology, then chemistry, then the stress test the hero already spoiled — carried out in full.</p>
+  </div>
 
-<div class="ov-feature ov-reveal">
-<div class="ov-feature-sticky"><article class="card big"><div class="card-head"><h3>Temperature × pH</h3><span>select / double-click to drill</span></div><div id="physScatter" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each point is a ThermoBase organism with measured optimum temperature and pH. Dense regions show where the database has many characterized organisms; they do not represent population abundance in nature.</p></div><div id="physDrill" class="detail"></div></article></div>
-<div class="ov-feature-text"><span class="tag">02 · Physiological space</span><h2>Where does terrestrial life actually live?</h2><p>Start with the measured niche dimensions, then drill from population-level structure into individual organisms and their environmental context. Every downstream environment, metabolism and machine-learning result inherits whatever shape this niche map has.</p><p>Use the filters above to isolate a domain, environment or thermal range — every chart in this section, including the ones below, responds to the same active subset.</p></div>
-</div>
+  <div class="stop wide" id="stop-2-1">
+    <div class="stop-num">II.1</div>
+    <h3>Where does this life actually live?</h3>
+    <p class="lede">Every downstream pattern inherits whatever shape this measured niche has.</p>
+    <div class="chart-card"><div id="chartPhys" class="plot" style="height:420px"></div>
+      <div class="read"><b>Dense regions are where evidence is thick, not where life is common.</b> Bacteria and Archaea dominate the measured space; Eukaryota are a small minority of this curated release.</div>
+    </div>
+  </div>
 
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Thermal niche distribution</h3><span>measured Topt</span></div><div id="physThermal" class="plot tall"></div><div class="explain"><b>What it tells us</b><p>The distribution shows how strongly the current database is weighted toward particular thermal regimes. The ≥80°C group becomes useful later as an explicit classification target.</p></div></article><article class="card"><div class="card-head"><h3>Multidimensional physiology</h3><span>advanced · drag axes</span></div><div id="parallelPhys" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each line follows one organism across Topt, pHopt, salinity and pressure where available. Missing dimensions create gaps; that is why this view is a measured-subset visualization rather than a complete representation of all 1,238 records.</p></div></article></div>
+  <div class="stop" id="stop-2-2">
+    <div class="stop-num">II.2</div>
+    <h3>A mention is not evidence</h3>
+    <p class="lede">A chemical name appearing in the literature is not the same as adjudicated proof that an organism uses it metabolically.</p>
+    <div class="chart-card"><div id="chartChem" class="plot short"></div>
+      <div class="read"><b>Only 1 in 5 records reach high-confidence chemical adjudication.</b> Most either have no extracted compound at all, or their chemical context remains explicitly unresolved rather than promoted into a claim.</div>
+    </div>
+  </div>
 
-<div class="grid ov-reveal"><article class="card"><div class="card-head"><h3>Measurement coverage</h3><span>active filter</span></div><div id="coverageHeat" class="plot tall"></div><div class="explain"><b>Why it matters</b><p>A physiological pattern is only as strong as its measured coverage. Temperature is substantially more complete than pH and pressure in this release.</p></div></article></div>
+  <div class="stop wide" id="stop-2-3">
+    <div class="stop-num">II.3 — the climax</div>
+    <h3>The stress test</h3>
+    <p class="lede">Six metabolic pathways looked predictable from environment alone under ordinary random cross-validation. Only one of them was tested against something harder: could the model still tell pathways apart once it could no longer lean on which branch of the tree of life an organism belonged to?</p>
+    <div class="verdict-list" id="verdictList"></div>
+    <div class="worked-example">
+      <h4>Hydrogen oxidation, worked through in full</h4>
+      <p id="workedExampleText" style="color:#D7DBD3">—</p>
+      <div class="read">Random cross-validation shuffles all 1,238 records together, so close relatives can end up on both sides of the split — the model can partly succeed by recognizing lineage, not environment. Grouped validation holds an entire phylum out at once, so the model must generalize to organisms unlike anything it trained on.</div>
+    </div>
+  </div>
+</section>
 
-<div class="record-drawer" id="physRecords"></div><div class="insight ov-reveal"><b>Next question</b><span>If organisms occupy these niches, what environmental settings are represented by those observations?</span><button data-jump="environment">Follow the organisms into their environments →</button></div></section>
+<section class="act" id="act3">
+  <div class="act-head">
+    <div class="act-label"><span class="roman">III</span><span>What can we say about other worlds?</span></div>
+    <h2>Only what survived Act II gets to travel further.</h2>
+    <p class="dek">One workbench for exploring on your own, one case study tested against the same caution from Act I, one plain verdict.</p>
+  </div>
 
-<section id="environment" class="view redesigned">
-<div class="ov-feature ov-reveal">
-<div class="ov-feature-sticky"><article class="card big"><div class="card-head"><h3>Environmental representation</h3><span>click to filter</span></div><div id="envChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each bar is an environment label in the active subset. Click a bar to filter the environment drill-down.</p><div class="guide-divider"></div><b>What it tells us</b><p>The environment layer connects physiological observations to the ecological settings in which those observations were made.</p></div><div id="envDetail" class="detail"></div></article></div>
-<div class="ov-feature-text"><span class="tag">03 · Environments</span><h2>What environments select for which physiology?</h2><p>Move from organism-level observations to environmental context, then drill into the organisms and pathways behind each category.</p><p>Click any bar to carry that environment forward — the metabolism, oxygen and taxonomy views below all filter to whatever you select here.</p></div>
-</div>
+  <div class="stop wide" id="stop-3-1">
+    <div class="stop-num">III.1 — exploration, not argument</div>
+    <h3>Build a hypothetical environment</h3>
+    <p class="lede">Set conditions and see which measured organisms come closest. This is a similarity search against Earth life, not a probability of life elsewhere — nothing here is highlighted or narrated as a finding, because it isn't one.</p>
+    <div class="workbench">
+      <div class="workbench-tag">No verdict color used below. This tool doesn't know what you'll find.</div>
+      <div class="workbench-controls">
+        <label>Temperature (°C)<input id="wbTemp" type="number" value="70"></label>
+        <label>pH<input id="wbPh" type="number" step="0.1" value="6.5"></label>
+        <label>Domain<select id="wbDomain"><option value="">Any</option><option>Bacteria</option><option>Archaea</option><option>Eukaryota</option></select></label>
+      </div>
+      <button class="run" id="wbRun">Find closest analogues</button>
+      <div class="workbench-result" id="wbResult"></div>
+    </div>
+  </div>
 
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Environment × optimum temperature</h3><span>median + spread</span></div><div id="envTemp" class="plot tall"></div><div class="explain"><b>How to read</b><p>Bars summarize median Topt for represented environments. The spread matters: two environments can share a median while occupying very different thermal ranges.</p></div></article><article class="card"><div class="card-head"><h3>Environment × metabolism</h3><span>click a cell</span></div><div id="envMetHeat" class="plot tall"></div><div class="explain"><b>How to read</b><p>Rows are environments and columns are pathway labels. Darker/larger values mean more records carry both labels.</p><div class="guide-divider"></div><b>What it tells us</b><p>It reveals where metabolic capabilities are represented, while leaving causation and lineage confounding for later analysis.</p></div><div id="envMetDetail" class="detail"></div></article></div>
+  <div class="stop wide" id="stop-3-2">
+    <div class="stop-num">III.2</div>
+    <h3>Enceladus, tested against Act I's own caution</h3>
+    <p class="lede">Enceladus is the strongest case study here because plume sampling gives direct access to ocean chemistry. The leading hypothesis is hydrogenotrophic methanogenesis — the same reaction terrestrial methanogens run in hydrothermal settings.</p>
+    <div class="chart-card"><div id="chartEnceladus" class="plot short"></div>
+      <div class="read" id="enceladusRead">—</div>
+    </div>
+    <div class="callout" id="enceladusCallout"><b>Checking our own analogue:</b> —</div>
+  </div>
 
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Oxygen requirement</h3><span>within active environment</span></div><div id="oxygenChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>Bars rank reported oxygen requirements in the active subset. Click a category to expose its pathway and environment composition.</p><div class="guide-divider"></div><b>What it tells us</b><p>Oxygen requirement helps separate reducing from oxidizing settings, but it can also track habitat and lineage structure.</p></div><div id="oxygenDetail" class="detail"></div></article><article class="card"><div class="card-head"><h3>Taxonomic structure of environments</h3><span>phylum × environment</span></div><div id="envTaxHeat" class="plot tall"></div><div class="explain"><b>Why this matters</b><p>If one environment is dominated by a particular lineage, an apparent environment–metabolism association may partly reflect taxonomy. That is the confounding problem the ML stage will stress-test.</p></div></article></div>
+  <div class="stop" id="stop-3-3">
+    <div class="stop-num">III.3</div>
+    <h3>What actually held up</h3>
+    <div class="synthesis" id="synthesisText"><p>—</p></div>
+    <p class="source-line">Original dataset: <a href="https://ahed.nasa.gov/datasets/e6e6ade4a91fee03d9f99ea19602/t3c34s" target="_blank" rel="noopener">NASA AHED ThermoBase</a>.</p>
+  </div>
+</section>
 
-<div class="grid ov-reveal"><article class="card"><div class="card-head"><h3>Environment drill-down</h3><span>records behind the pattern</span></div><div id="envRecords" class="record-list"></div></article></div>
+</main>
 
-<div class="insight ov-reveal"><b>Question raised</b><span>Environment and lineage are entangled. We now need to ask what organisms are actually doing chemically — and whether the chemistry layer survives the same scrutiny.</span><button data-jump="metabolism">Open metabolism & chemistry →</button></div></section>
+<footer>Built from the ThermoBase v17 data release — 1,238 records, 337 fields. Verdicts are computed live from the stored model-comparison results, not narrated separately from the data.</footer>
 
-<section id="metabolism" class="view redesigned">
-<div class="met-filter"><label>Search records, pathways or compounds<input id="metSearch" placeholder="methanogenesis, methane, H₂, sulfate…"></label><button id="clearMet">Clear search</button></div><div id="metSearchResults" class="search-results"></div>
-
-<div class="ov-feature ov-reveal">
-<div class="ov-feature-sticky"><article class="card big"><div class="card-head"><h3>Only 1 in 5 records reach high-confidence chemical adjudication</h3><span>evidence status · live-filtered</span></div><div id="chemChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>These categories describe the status of explicit chemical-role adjudication in the currently active filter — not a fixed total. A compound name in a source field is not automatically a donor, acceptor, substrate or product.</p></div></article></div>
-<div class="ov-feature-text"><span class="tag">04 · Metabolism & chemistry</span><h2>What does life do with the environment?</h2><p>Move from labels to transformations. A chemical mention in the literature is not the same as adjudicated evidence of metabolic use — this is the most epistemically careful layer in the whole project, and the chart beside this text is why: most records either have no extracted compound at all, or their chemical context remains unresolved.</p><p>Search the research layer, inspect pathways, and follow chemical roles without treating vocabulary as biology.</p></div>
-</div>
-
-<div class="grid two ov-reveal"><article class="card big"><div class="card-head"><h3>Metabolic capabilities</h3><span>click pathway</span></div><div id="metChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each bar counts records carrying the pathway label. Click a pathway to rebuild the chemical-role map around it.</p><div class="guide-divider"></div><b>What it tells us</b><p>These counts describe representation in ThermoBase, not environmental prevalence or metabolic activity in nature.</p></div><div id="metDetail" class="detail"></div></article><article class="card"><div class="card-head"><h3>Pathway → adjudicated chemical role</h3><span>role evidence map</span></div><div id="chemSankey" class="plot tall"></div><div class="explain"><b>How to read</b><p>Follow flow from a metabolic pathway into a role and then into representative compounds. This is a relationship map, not a quantitative flux model.</p></div></article></div>
-
-<div class="grid ov-reveal"><article class="card"><div class="card-head"><h3>Chemical vocabulary</h3><span>ranked, searchable</span></div><div id="compoundChart" class="plot tall"></div><div class="explain"><b>What it conveys</b><p>Frequently extracted compounds are shown with the number of records in which they occur. Select a bar to inspect the records and adjudicated context.</p></div></article></div>
-
-<div id="pathwayCards" class="pathway-grid"></div><div class="insight ov-reveal"><b>Next question</b><span>If environmental conditions are associated with metabolic niches, can we separate environmental signal from lineage structure?</span><button data-jump="evidence">Audit the evidence first →</button></div></section>
-
-<section id="evidence" class="view redesigned">
-<div class="ov-feature ov-reveal">
-<div class="ov-feature-sticky"><article class="card big"><div class="card-head"><h3>Only 39 of 1,238 records carry any candidate biosignature status</h3><span>click a bar</span></div><div id="biosigChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>Click a bar to see which records carry that status. Almost the entire release carries no candidate biosignature status at all.</p><div class="guide-divider"></div><b>What it tells us</b><p>Most of what does carry a status is explicitly flagged high false-positive-risk or non-specific. This is the caution that has to hold up before any planetary claim later in this app is taken seriously.</p></div><div id="biosigDetail" class="detail"></div></article></div>
-<div class="ov-feature-text"><span class="tag">05 · Evidence & quality</span><h2>How much can we trust each layer?</h2><p>Data curation is part of the science. Inspect completeness, QC dispositions and the origin of the 337 fields before interpreting associations.</p><p>This is also where we answer a more pointed question: when this app eventually talks about biosignatures, how careful is it actually being? The chart beside this text is the answer — and it's a humbling one.</p></div>
-</div>
-
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Pressure is essentially unmeasured — 97% missing</h3><span>click a field</span></div><div id="missingChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>Higher bars mean more records lack that variable. Click a field to inspect the exact coverage consequence.</p><div class="guide-divider"></div><b>What it tells us</b><p>Missingness determines which downstream questions are directly estimable and why some analyses must use measured subsets.</p></div><div id="missingDetail" class="detail"></div></article><article class="card"><div class="card-head"><h3>86% of records pass current QC — the rest are named, not hidden</h3><span>release status</span></div><div id="qualityChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each bar is a final record-level QC disposition. Click a category to inspect what it means.</p><div class="guide-divider"></div><b>What it tells us</b><p>ThermoBase retains unresolved and exceptional evidence states instead of silently deleting them.</p></div><div id="qualityDetail" class="detail"></div></article></div>
-
-<div class="evidence-cards ov-reveal"><div><b>1 unresolved taxonomy identity</b><p>Bacillus sp. IFA 119 has no authoritative strain-specific TaxID established.</p></div><div><b>1 pressure source exception</b><p>Methanothermobacter wolfeii SIV6 retains the original S1 value while source-cell support remains unresolved.</p></div><div><b>Ambiguous chemistry is retained</b><p>Partial high-confidence and unresolved chemical contexts are not silently promoted.</p></div><div><b>Envelope consistency</b><p>Current thermal and complete pH envelopes contain no Tmin &gt; Topt, Topt &gt; Tmax, or complete pH ordering violations.</p></div></div>
-<article class="card schema ov-reveal"><div class="card-head"><h3>337-field evidence explorer</h3><span>search + filter + inspect</span></div><div class="schema-tools"><input id="schemaSearch" placeholder="Search field name…"><select id="schemaGroup"><option value="">All field groups</option></select><select id="schemaOrigin"><option value="">All origins</option><option value="original">Original / source</option><option value="derived">Derived / analytical</option><option value="qc">QC / provenance</option></select></div><div id="schemaCount" class="schema-count"></div><div id="schemaExplorer" class="schema-explorer"></div><div id="schemaDetail" class="detail"></div></article>
-<div class="insight ov-reveal"><b>Scientific consequence</b><span>Once the evidence layer is explicit, modelling can distinguish measured biology from database structure — and failures become interpretable.</span><button data-jump="analysis">Continue to integrated structure →</button></div></section>
-
-<section id="analysis" class="view redesigned">
-<div class="ov-feature ov-reveal">
-<div class="ov-feature-sticky"><article class="card big"><div class="card-head"><h3>Environment and metabolism overlap — but so does taxonomy</h3><span>association + drill-down</span></div><div id="envMetSankey" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each visible flow connects records carrying both an environment label and a pathway label. Flow width is record count, not reaction flux or causation. Click a flow to inspect the supporting records.</p><div class="guide-divider"></div><b>What it tells us</b><p>It reveals which metabolic pathways are represented within the major environments and where environmental and metabolic structure overlap. Taxonomic confounding is tested later rather than hidden here.</p></div><div id="envMetSankeyDetail" class="detail"></div></article></div>
-<div class="ov-feature-text"><span class="tag">06 · Integrated structure</span><h2>Find structure before making predictions.</h2><p>Bring physiology, environment, metabolism and taxonomy into the same analytical space. The goal is to formulate testable questions, not to confuse association with causation.</p><p>This section is a workbench, not an argument — use the feature-pair explorer below to poke at the data yourself before the next section puts a specific claim under a formal stress test.</p></div>
-</div>
-
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Polyextremophily</h3><span>multiple physiological extremes</span></div><div id="polyChart" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each category counts records satisfying multiple extreme-niche criteria. More extreme dimensions do not automatically mean greater habitability relevance; they show how physiological breadth is distributed in the dataset.</p></div></article><article class="card"><div class="card-head"><h3>Physiological space, two ways</h3><span>Topt × pH · Topt × salinity</span></div><div id="phys3d" class="plot tall"></div><div class="explain"><b>How to read</b><p>Two aligned 2D views instead of a rotating 3D plot — each dimension stays readable without needing to rotate anything. Color identifies domain, consistent with every other chart in this app.</p></div></article></div>
-
-<div class="grid ov-reveal"><article class="card"><div class="card-head"><h3>Feature-pair explorer</h3><span>choose two variables</span></div><div class="pair-controls"><select id="pairX"></select><select id="pairY"></select></div><div id="pairPlot" class="plot tall"></div><div class="explain"><b>How to read</b><p>Choose two variables, then inspect the measured overlap. Each point is an organism.</p><div class="guide-divider"></div><b>What it tells us</b><p>The overlap count tells you how much evidence actually supports that pairwise comparison before any correlation or model is attempted.</p></div><div id="pairDetail" class="detail"></div></article></div>
-
-<div class="question-panel ov-reveal"><span class="tag">The test</span><h3>Can environmental information predict metabolic niches — and does that relationship survive lineage control?</h3><p>That is the point at which machine learning becomes scientifically useful rather than decorative.</p><button data-jump="ml">Enter the ML laboratory →</button></div></section>
-
-<section id="ml" class="view redesigned">
-<div class="ov-feature ov-reveal">
-<div class="ov-feature-sticky"><article class="card big"><div class="card-head"><h3>Hydrogen oxidation's signal disappears once lineage is controlled for</h3><span>stress test · opens on hydrogen oxidation</span></div><div id="mlStress" class="plot tall"></div><div class="explain"><b>How to read</b><p>Compare the same environment-only model under random folds and phylum-grouped holdout.</p><div class="guide-divider"></div><b>What it tells us</b><p>A large drop indicates that apparent predictive power may partly reflect lineage structure rather than transferable environmental signal.</p></div><div id="mlInterpretation" class="detail"></div></article></div>
-<div class="ov-feature-text"><span class="tag">07 · ML laboratory</span><h2>Build the prediction, then try to break it.</h2><p>This is the hinge of the whole argument. Hydrogen oxidation looks strongly predictable from environment alone under ordinary random cross-validation — and loses most of that apparent signal once the model is only allowed to generalize across phyla it hasn't seen. That gap is the payoff of everything in sections 01–06.</p><p><b>Now check the other five pathways yourself</b> — click any row below to load it into the model explorer and see whether its signal holds, partly holds, or collapses the same way.</p><div id="mlVerdictSummary" class="verdict-summary"></div></div>
-</div>
-
-<div class="ml-lab ov-reveal"><div class="ml-lab-grid"><aside class="ml-inputs"><div class="lab-kicker">Model explorer</div><h3>Choose the question</h3><label>Target pathway<select id="mlPathway"></select></label><label>Predictor set<select id="mlPredictors"><option value="environment">Environment only</option><option value="taxonomy">Taxonomy only</option><option value="combined">Environment + taxonomy</option></select></label><label>Validation<select id="mlValidation"><option value="random">Random 5-fold</option><option value="grouped">Phylum-grouped</option></select></label><label>Decision threshold <input id="mlThreshold" type="range" min="0" max="1" step="0.01" value="0.50"><span id="mlThresholdValue">0.50</span></label><div class="ml-input-section"><b>Scenario inputs</b><label>Domain<select id="mlDomain"><option value="">Any domain</option><option>Bacteria</option><option>Archaea</option><option>Eukaryota</option></select></label><label>Environment<select id="mlEnvironment"><option value="">Any environment</option></select></label><label>Oxygen<select id="mlOxygen"><option value="">Any</option></select></label><label>Optimum temperature (°C)<input id="mlTemp" type="number" placeholder="e.g. 70"></label><label>Optimum pH<input id="mlPH" type="number" step="0.1" placeholder="e.g. 7.5"></label><label>Salinity (% normalized)<input id="mlSal" type="number" step="0.1" placeholder="e.g. 1"></label><label>Pressure (MPa)<input id="mlPressure" type="number" step="0.1" placeholder="e.g. 1"></label><button id="mlClearScenario" type="button">Clear scenario</button></div><div class="ml-note">The stored model metrics below are the validated v74 results. Scenario inputs do not silently retrain the model; they locate comparable measured records and expose their out-of-fold environment-model probabilities.</div></aside><div class="ml-main"><div class="ml-flow"><div class="flow-box"><b>INPUT</b><span id="mlInputSummary">environment variables</span></div><i>→</i><div class="flow-box"><b>MODEL</b><span id="mlModelSummary">stored 5-fold model</span></div><i>→</i><div class="flow-box"><b>OUTPUT</b><strong id="mlScore">—</strong><span id="mlScoreLabel">select a configuration</span></div></div><div id="mlScenarioResult" class="ml-scenario-result"></div><div id="mlFeatureMap" class="ml-feature-map"></div></div></div></div>
-
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Selected model performance</h3><span>dynamic selection</span></div><div id="mlPerformance" class="plot tall"></div><div class="explain"><b>How to read</b><p>Compare ROC-AUC, PR-AUC and balanced accuracy for the selected target, predictor set and validation scheme.</p><div class="guide-divider"></div><b>What it tells us</b><p>The metrics describe discrimination among known terrestrial records. They are not probabilities that a metabolism is present in a planet or that life exists.</p></div></article><article class="card"><div class="card-head"><h3>Predictor-set comparison</h3><span>environment · taxonomy · combined</span></div><div id="mlComparison" class="plot tall"></div><div class="explain"><b>How to read</b><p>Compare the three stored predictor sets for the selected pathway under random 5-fold validation.</p><div class="guide-divider"></div><b>What it tells us</b><p>If taxonomy-only performs nearly as well as environment-only, lineage structure is an important competing explanation for the apparent environmental signal.</p></div></article></div>
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Model output interpretation</h3><span>trace the reasoning</span></div><div id="mlReasoningPanel" class="methodology-panel"></div></article><article class="card"><div class="card-head"><h3>Model methodology</h3><span>open the black box</span></div><div id="mlMethodology" class="methodology-panel"></div></article></div>
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Out-of-fold ROC</h3><span>environment-only OOF</span></div><div id="mlCurves" class="plot tall"></div><div class="explain"><b>How to read</b><p>Each point is a threshold. The curve shows false-positive rate against true-positive rate using stored out-of-fold predictions.</p><div class="guide-divider"></div><b>What it tells us</b><p>This assesses ranking discrimination on held-out terrestrial records rather than fitting and scoring the same records together.</p></div></article><article class="card"><div class="card-head"><h3>Precision–recall</h3><span>environment-only OOF</span></div><div id="mlPR" class="plot tall"></div><div class="explain"><b>How to read</b><p>Recall is sensitivity; precision is the fraction of positive predictions that are correct at each threshold.</p><div class="guide-divider"></div><b>What it tells us</b><p>PR is especially informative when the positive class is uncommon and should be read alongside prevalence and ROC-AUC.</p></div></article></div>
-<div class="grid two ov-reveal"><article class="card"><div class="card-head"><h3>Threshold diagnostics</h3><span id="mlThresholdLabel">threshold 0.50</span></div><div id="mlConfusion" class="plot tall"></div><div class="explain"><b>How to read</b><p>Rows are actual classes and columns are model decisions. Move the threshold to see false positives and false negatives change.</p><div class="guide-divider"></div><b>What it tells us</b><p>The threshold controls the trade-off between sensitivity and specificity; it does not change the underlying trained model.</p></div><div id="mlThresholdDetail" class="detail"></div></article><article class="card"><div class="card-head"><h3>Extreme thermal niche</h3><span>Topt ≥ 80°C</span></div><div id="mlExtreme" class="plot tall"></div><div class="explain"><b>Interpretation</b><p>This separate classifier asks whether environmental/ecological characteristics identify the extreme thermal niche. It excludes Tmin/Topt/Tmax from predictors and is a niche classification experiment, not a claim that temperature determines evolutionary adaptation.</p></div></article></div>
-
-<div class="question-panel ov-reveal"><span class="tag">From prediction to planet</span><h3>Prediction is not the endpoint. What happens when these terrestrial metabolic constraints are applied to environments beyond Earth?</h3><button data-jump="sandbox">Construct an environment first →</button></div></section>
-
-<section id="sandbox" class="view redesigned"><div class="section-head"><div><span class="tag">08 · Environment laboratory</span><h2>Construct an environment and explore the biological consequences.</h2></div><p>Play with environmental constraints using ThermoBase analogues. This is a scenario explorer: compatibility scores and model-derived quantities are not probabilities of life.</p></div>
-<div class="sandbox-grid"><article class="card controls-card"><div class="card-head"><h3>Build your environment</h3><span>interactive scenario</span></div><label>Temperature (°C)<input id="sbTemp" type="number" value="70"></label><label>pH<input id="sbPH" type="number" value="8" step="0.1"></label><label>Salinity (% normalized)<input id="sbSal" type="number" value="1" step="0.1"></label><label>Pressure (MPa)<input id="sbPressure" type="number" value="0.1" step="0.1"></label><label>Oxygen<select id="sbO2"><option value="anoxic">Anoxic / reducing</option><option value="low">Low oxygen</option><option value="oxic">Oxic</option></select></label><label>H₂ availability<select id="sbH2"><option value="high">High</option><option value="moderate">Moderate</option><option value="low">Low</option><option value="unknown">Unknown</option></select></label><label>CO₂ availability<select id="sbCO2"><option value="high">High</option><option value="moderate">Moderate</option><option value="low">Low</option><option value="unknown">Unknown</option></select></label><label>Sulfate<select id="sbSulfate"><option value="unknown">Unknown</option><option value="high">High</option><option value="moderate">Moderate</option><option value="low">Low</option></select></label><label>Elemental sulfur<select id="sbSulfur"><option value="unknown">Unknown</option><option value="high">High</option><option value="moderate">Moderate</option><option value="low">Low</option></select></label><label>Fe(III) availability<select id="sbIron"><option value="unknown">Unknown</option><option value="high">High</option><option value="moderate">Moderate</option><option value="low">Low</option></select></label><button id="runSandbox" class="primary">Run environment scenario</button><div class="reaction">The laboratory ranks compatibility against observed ThermoBase niches. It does not infer a planetary life probability and does not perform first-principles thermodynamic calculations.</div><details class="math-reveal"><summary>Show the compatibility formula</summary><pre>analogue_score(record) = mean over {temp, pH, salinity, pressure} of
-  max(0, 1 − |scenario_value − record_value| / scale)
-  where scale = {temp:45°C, pH:3, salinity:10%, pressure:50 MPa}
-
-pathway_score(pathway) = round(
-  count(top-20 analogues carrying pathway) × chemFactor(pathway)
-)
-  chemFactor adds fixed weights (0.10–0.45) per selected
-  oxygen / H₂ / CO₂ / sulfate / sulfur / Fe(III) level —
-  see app.js:runSandbox for the exact per-pathway weights.</pre><p>This is the entire heuristic — a normalized physiological distance plus hand-set chemistry weights. No thermodynamics, no trained model, no probability calibration is involved.</p></details></article><article class="card"><div class="card-head"><h3>Scenario result</h3><span>changes live</span></div><div id="sandboxKpis" class="metric-grid"></div><div id="sandboxPlot" class="plot tall"></div><div class="explain"><b>How to read</b><p>The X is your constructed environment; colored points are measured ThermoBase analogues. Distance is converted to a transparent compatibility heuristic.</p><div class="guide-divider"></div><b>What it tells us</b><p>The scenario reveals which observed terrestrial niches are closest under the chosen constraints. It does not calculate a life probability.</p></div><div id="sandboxText" class="detail"></div></article></div>
-<div class="grid two"><article class="card"><div class="card-head"><h3>Pathway compatibility under this scenario</h3><span>transparent heuristic</span></div><div id="sandboxPathways" class="plot"></div><div class="explain"><b>How to read</b><p>Bars show the scenario heuristic for each pathway after physiological analogue matching and the selected chemical/oxygen constraints. This is not a calibrated probability.</p><div class="guide-divider"></div><b>What it tells us</b><p>The relative ranking shows which of the six represented pathways is most compatible with the constructed scenario under the project's explicit assumptions.</p></div></article><article class="card"><div class="card-head"><h3>Candidate products / transformations</h3><span>process-based</span></div><div id="sandboxProducts" class="plot"></div><div class="explain"><b>How to read</b><p>These are candidate products associated with compatible ThermoBase pathways. A candidate gas is not automatically a biosignature: abiotic production must be evaluated independently.</p></div></article><article class="card"><div class="card-head"><h3>Evidence status</h3><span>do not overinterpret</span></div><div id="sandboxEvidence" class="detail"></div></article></div></section>
-
-<section id="worlds" class="view redesigned"><div class="section-head"><div><span class="tag">09 · Planetary hypotheses</span><h2>Take the framework beyond Earth — without pretending the worlds are equivalent.</h2></div><p>Each world has a different evidence regime. Enceladus is a detailed case study; Europa is an ocean-world analogue; TRAPPIST-1 e and K2-18 b are remote atmospheric targets.</p></div>
-<div class="world-tabs" id="worldTabs"><button data-world="enceladus" class="active">Enceladus</button><button data-world="europa">Europa</button><button data-world="trappist">TRAPPIST-1 e</button><button data-world="k218">K2-18 b</button><button data-world="earth">Earth benchmark</button></div><div id="worldContent"></div>
-<div class="planetary-summary"><div class="planetary-grid" id="planetaryGrid"></div><div class="planetary-note"><b>How to use this page</b><p>Choose a world above. Read the four boxes: <strong>what is observed</strong>, <strong>what ThermoBase contributes</strong>, <strong>what remains unknown</strong>, and <strong>what would discriminate the hypotheses</strong>. These worlds are deliberately not assigned one common “life score.”</p></div></div>
-<div class="grid two"><article class="card"><div class="card-head"><h3 id="worldPathwayTitle">Enceladus pathway discrimination</h3><span id="worldPathwaySubtitle">14 criteria · ordinal compatibility</span></div><div id="pathwayCompare" class="plot tall"></div><div class="explain"><b>Critical distinction</b><p><strong>14/14 is not a probability of life.</strong> It means the pathway met all 14 criteria in the project’s discrimination matrix. The biological and abiotic hypotheses remain distinguishable only to the extent that the planetary constraints are known.</p></div></article><article class="card"><div class="card-head"><h3 id="worldChainTitle">Enceladus: the reasoning chain</h3><span>world-specific, explicit</span></div><div id="enceladusNetwork" class="reaction-chain"></div></article></div>
-<div class="world-callout"><b>Current scientific caution</b><p>Candidate biosignatures must be evaluated against abiotic baselines, planetary transport, temperature, chemistry and observational uncertainty. Molecules associated with life are not automatically evidence of life.</p></div><div id="worldSources" class="sources"></div></section>
-
-<section id="synthesis" class="view redesigned"><div class="hero compact"><div class="eyebrow">10 · Synthesis</div><h1>What held up, what did not, and what remains open.</h1><p class="lede">The endpoint is not a single prediction. It is a traceable chain from data to evidence, from evidence to models, and from models to planetary hypotheses — and the honest version of that chain names its failures as clearly as its successes.</p></div><div id="synthesisDynamic"></div><div class="chain-large"><div><b>01</b><strong>Data</strong><span>1,238 organisms · 337 fields</span></div><i>→</i><div><b>02</b><strong>Physiology</strong><span>temperature · pH · salinity · pressure</span></div><i>→</i><div><b>03</b><strong>Metabolism</strong><span>pathways · chemistry · transformations</span></div><i>→</i><div><b>04</b><strong>Models</strong><span>prediction · confounding · stress tests</span></div><i>→</i><div><b>05</b><strong>Planets</strong><span>biosignature hypotheses · abiotic alternatives</span></div></div>
-<div class="grid three"><article class="card"><span class="tag">OBSERVED</span><h3>What is strongest?</h3><p>The database contains structured physiological and environmental observations across 1,238 records, with a much stronger thermal layer than pH or pressure coverage.</p></article><article class="card"><span class="tag">SUPPORTED</span><h3>What survives analysis?</h3><p>Several metabolic pathways retain useful environment signal under lineage-controlled validation, while hydrogen oxidation provides an important example of a signal that collapses under lineage control.</p></article><article class="card"><span class="tag">UNKNOWN</span><h3>What remains open?</h3><p>ThermoBase does not establish extraterrestrial life, a universal environmental law, or a definitive biosignature. Planetary inference remains constrained by abiotic chemistry and incomplete observations.</p></article></div>
-<div class="grid two"><article class="card"><div class="card-head"><h3>Open questions</h3><span>next research</span></div><div class="question-list"><div><b>01</b><span>Can literature recovery substantially improve the sparse pH and pressure layers?</span></div><div><b>02</b><span>Can a ThermoBase-specific phylogeny separate environment from evolutionary history more rigorously?</span></div><div><b>03</b><span>Can explicit thermodynamic constraints turn compatibility into a defensible probabilistic model?</span></div><div><b>04</b><span>Which planetary observations would most efficiently discriminate biological from abiotic chemistry?</span></div></div></article><article class="card"><div class="card-head"><h3>Research philosophy</h3><span>why the limitations matter</span></div><div class="explain large"><b>Do not hide complexity; organize it.</b><p>ThermoBase is intentionally explicit about uncertainty, lineage confounding, incomplete evidence and abiotic alternatives. A scientific interface is useful when it lets the user see not only the attractive pattern, but also the test that could make that pattern fail.</p></div></article></div><div class="sources"><b>Current planetary references</b><a href="https://science.nasa.gov/saturn/moons/enceladus/" target="_blank">NASA · Enceladus ↗</a><a href="https://science.nasa.gov/blogs/science-news/2026/01/29/nasas-galileo-mission-points-to-ammonia-at-europa-recent-study-shows/" target="_blank">NASA · Europa ammonia 2026 ↗</a><a href="https://science.nasa.gov/mission/webb/science-overview/science-explainers/what-is-webb-revealing-about-the-trappist-1-system/" target="_blank">NASA · TRAPPIST-1 ↗</a><a href="https://science.nasa.gov/missions/webb/webb-discovers-methane-carbon-dioxide-in-atmosphere-of-k2-18-b/" target="_blank">NASA · K2-18 b ↗</a></div></section>
-</main></div>
-
-<div id="chartModal" class="chart-modal" aria-hidden="true"><div class="chart-modal-head"><div><span id="modalKicker">EXPANDED VIEW</span><h2 id="modalTitle">Chart</h2></div><button id="modalClose">×</button></div><div id="modalPlot" class="modal-plot"></div><div id="modalExplanation" class="modal-explanation"></div><div id="modalDetail" class="modal-detail"></div></div><div id="modalBackdrop" class="modal-backdrop"></div>
-<button id="chatFab">Ask ThermoBase</button><section id="researchChat" class="research-chat" aria-hidden="true"><div class="chat-head"><div><span class="chat-kicker">THERMOBASE RESEARCH LAYER</span><h2>Ask the dataset</h2></div><button id="chatClose">×</button></div><div id="chatContext" class="chat-context"></div><div id="chatBody" class="chat-body"><div class="chat-msg assistant"><b>ThermoBase</b><p>Ask a question about the data, analysis, ML, chemistry or planetary cases. Free-form queries are supported; answers stay inside the documented research layer.</p></div><div class="chat-chips"><button data-chatq="How many organisms have complete thermal envelopes?">Thermal QC</button><button data-chatq="What happens to hydrogen oxidation under lineage control?">ML stress test</button><button data-chatq="Why is 14/14 not a probability of life?">Enceladus score</button><button data-chatq="Find methane in the chemical layer">Find methane</button></div></div><div id="chatVisual" class="chat-visual"></div><form id="chatForm" class="chat-input"><textarea id="chatQuestion" rows="2" placeholder="Ask a specific ThermoBase question…"></textarea><button type="submit">Ask</button></form><div class="chat-foot">Local research retrieval · unsupported claims are not invented</div></section>
-<script src="app.js"></script></body></html>
+<script src="app.js"></script>
+</body>
+</html>
