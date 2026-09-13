@@ -80,33 +80,10 @@ function renderAct2(){
   const order=['CLOSED_HIGH_CONFIDENCE','CLOSED_PARTIAL_HIGH_CONFIDENCE_REMAINDER_UNRESOLVED','CLOSED_UNRESOLVED_CONTEXT','CLOSED_NO_COMPOUND'].filter(k=>counts[k]);
   plotBar('chartChem',order.map(k=>label[k]),order.map(k=>counts[k]),{horizontal:true,highlight:['High-confidence adjudication']});
 
-  renderVerdictList();
+  renderExplorer();
 }
 
-function renderVerdictList(){
-  const rows=D.ml_random.map(row=>{
-    const p=row.pathway;
-    const random=modelRow(p,'environment_only');
-    const grouped=groupedRow(p);
-    const rs=random?.ROC_AUC, gs=grouped?.grouped_ROC_AUC;
-    return {p,rs,gs,v:verdictFor(rs,gs)};
-  });
-  $('#verdictList').innerHTML=rows.map(r=>`
-    <button class="verdict-row" data-p="${esc(r.p)}">
-      <div><b>${esc(r.p)}</b><div class="nums">random ${fmt(r.rs)}${finite(r.gs)?' → grouped '+fmt(r.gs):(r.gs===null?' → grouped: not estimable':'')}</div></div>
-      <span class="tag ${r.v.cls}">${esc(r.v.text)}</span>
-    </button>
-    <div class="row-detail" data-detail="${esc(r.p)}" style="display:none;padding:0 0 14px;font-size:13px;color:var(--sage)">${esc(r.v.detail)}</div>
-  `).join('');
-  $$('.verdict-row').forEach(b=>b.onclick=()=>{
-    const d=$(`[data-detail="${b.dataset.p}"]`);
-    const open=d.style.display!=='none';
-    $$('[data-detail]').forEach(x=>x.style.display='none');
-    $$('.verdict-row').forEach(x=>x.classList.remove('expanded'));
-    if(!open){d.style.display='block';b.classList.add('expanded')}
-  });
-
-  // hero + worked example, computed from the same source
+function renderHero(){
   const hRandom=modelRow('Hydrogen oxidation','environment_only');
   const hGrouped=groupedRow('Hydrogen oxidation');
   const rs=hRandom?.ROC_AUC, gs=hGrouped?.grouped_ROC_AUC;
@@ -116,7 +93,82 @@ function renderVerdictList(){
     $('#heroFillRandom').style.height=(finite(rs)?Number(rs)*160:0)+'px';
     $('#heroFillGrouped').style.height=(finite(gs)?Number(gs)*160:0)+'px';
   });
-  $('#workedExampleText').innerHTML=`Under random 5-fold cross-validation, an environment-only model separates hydrogen-oxidizing organisms from non-oxidizers with a ROC-AUC of <b class="mono">${fmt(rs)}</b> — strong-looking discrimination. Hold out entire phyla instead of shuffling records randomly, and the same model's ROC-AUC on unseen lineages drops to <b class="mono">${fmt(gs)}</b>, below what random guessing would produce. The pattern the random test found was mostly which lineage an organism belonged to, not what environment it lived in.`;
+}
+
+const PREDICTOR_LABEL={environment_only:'Environment only',taxonomy_only:'Taxonomy only',environment_plus_taxonomy:'Environment + taxonomy'};
+
+function barRow(label,value,colorClass){
+  const pct=finite(value)?Math.max(2,Number(value)*100):0;
+  return `<div class="bar-row"><span>${esc(label)}</span><div class="track"><div class="fill ${colorClass}" style="width:${pct}%"></div></div><span class="val mono">${fmt(value)}</span></div>`;
+}
+
+function renderExplorer(){
+  const pathwaySel=$('#expPathway'), predictorSel=$('#expPredictor'), validationSel=$('#expValidation');
+  if(!pathwaySel.dataset.ready){
+    D.ml_random.forEach(row=>pathwaySel.insertAdjacentHTML('beforeend',`<option value="${esc(row.pathway)}">${esc(row.pathway)}</option>`));
+    pathwaySel.value='Hydrogen oxidation';
+    pathwaySel.dataset.ready='1';
+  }
+
+  const update=()=>{
+    const pathway=pathwaySel.value;
+    let predictor=predictorSel.value;
+    const validation=validationSel.value;
+    if(validation==='grouped'){predictor='environment_only';predictorSel.value='environment_only';predictorSel.disabled=true}
+    else predictorSel.disabled=false;
+
+    // main score
+    let score,label;
+    if(validation==='random'){score=modelRow(pathway,predictor)?.ROC_AUC;label=`${PREDICTOR_LABEL[predictor]} · random 5-fold ROC-AUC`}
+    else{const g=groupedRow(pathway);score=g?.grouped_ROC_AUC;label='environment only · phylum-grouped ROC-AUC'}
+    $('#expScore').textContent=finite(score)?fmt(score):(score===null?'n/e':'—');
+    $('#expScoreLabel').textContent=label;
+
+    // mechanism, with real sparsity numbers
+    const g=groupedRow(pathway);
+    if(validation==='random'){
+      const row=modelRow(pathway,predictor);
+      $('#expMechanism').innerHTML=`All <b>1,238 records</b> are shuffled together into 5 folds. Close relatives of the same lineage can land on both sides of the split, so the model can partly succeed by recognizing ancestry rather than environment. ${row?`Of these records, <b>${row.positive_n}</b> are positive cases for ${esc(pathway.toLowerCase())}.`:''}`;
+    }else{
+      $('#expMechanism').innerHTML=g?`Each fold holds out an <b>entire phylum</b> at once — <b>${g.phylum_groups} phylum groups</b> total, <b>${g.positive_n}</b> positive cases spread across all of them. The model is tested only on organisms from lineages it never saw during training. ${g.grouped_ROC_AUC==null?'Here, too few positives fall in more than one phylum group to run the test at all.':''}`:'No grouped-validation record for this pathway.';
+    }
+
+    // persistent comparison strip: environment-only, random vs grouped, for whichever pathway is selected
+    const rs=modelRow(pathway,'environment_only')?.ROC_AUC;
+    const gs=g?.grouped_ROC_AUC;
+    $('#compareBars').innerHTML=barRow('Random 5-fold',rs,'grey')+barRow('Phylum-grouped',gs,'rust');
+    const v=verdictFor(rs,gs);
+    $('#compareTag').className='tag '+v.cls;
+    $('#compareTag').textContent=v.text+' — '+v.detail;
+
+    // predictor-set mini comparison, random validation, this pathway
+    const pe=modelRow(pathway,'environment_only')?.ROC_AUC;
+    const pt=modelRow(pathway,'taxonomy_only')?.ROC_AUC;
+    const pc=modelRow(pathway,'environment_plus_taxonomy')?.ROC_AUC;
+    $('#predictorBars').innerHTML=barRow('Environment only',pe,'verd')+barRow('Taxonomy only',pt,'grey')+barRow('Environment + taxonomy',pc,'grey');
+  };
+
+  pathwaySel.onchange=update; predictorSel.onchange=update; validationSel.onchange=update;
+
+  $$('.preset-btn').forEach(b=>b.onclick=()=>{
+    const presets={
+      collapse:{pathway:'Hydrogen oxidation',predictor:'environment_only',validation:'grouped'},
+      holds:{pathway:'Sulfate reduction',predictor:'environment_only',validation:'grouped'},
+      untestable:{pathway:'Methanogenesis',predictor:'environment_only',validation:'grouped'}
+    };
+    const p=presets[b.dataset.preset];
+    pathwaySel.value=p.pathway; predictorSel.value=p.predictor; validationSel.value=p.validation;
+    update();
+    $('#stop-2-3').scrollIntoView({behavior:'smooth',block:'center'});
+  });
+
+  update();
+}
+
+function renderRawExample(){
+  const rec=D.records.find(r=>String(r.name||'').includes('kandleri 116'));
+  if(!rec){$('#exampleText').textContent='';return}
+  $('#exampleText').innerHTML=`<b>One organism, before and after.</b> NASA's raw S1 row for <i>${esc(rec.name)}</i> has 26 fields: taxonomy, physiology ranges, a metabolism label, a literature source. The research layer used throughout this piece expands that same organism to all 337 fields — including, as original analytical additions, a chemical-role disposition of <b class="mono">${esc(rec.chemical_role_final_disposition_v72)}</b>, a QC status of <b class="mono">${esc(rec.final_qc_record_status_v71)}</b>, and an adjudicated compound role of <b class="mono">${esc(rec.extracted_compound_final_role_v71)}</b> — none of which exist in NASA's original release.`;
 }
 
 function renderAct3(){
@@ -185,6 +237,8 @@ async function boot(){
     document.body.innerHTML='<p style="padding:60px;font-family:Inter">Could not load the dataset. Check that data/thermobase.json is present next to this page.</p>';
     console.error(e);return;
   }
+  renderHero();
+  renderRawExample();
   renderAct1();
   renderAct2();
   renderAct3();

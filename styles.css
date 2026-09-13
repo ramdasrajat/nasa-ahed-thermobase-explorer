@@ -109,3 +109,36 @@ footer{padding:40px 8vw 60px;font-size:12px;color:var(--sage);border-top:1px sol
 .record-hit{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:4px;padding:9px 11px;margin-bottom:6px;font-size:12px}
 .record-hit b{display:block;font-family:Inter}
 .record-hit span{color:var(--sage);font-size:11px}
+
+/* purpose/methodology intro section — light body begins here, right after the dark hero */
+.intro{padding:70px 8vw 20px}
+.intro .stop{margin-bottom:0}
+.intro .lede b{color:var(--verdigris)}
+
+/* the ML explorer (II.3) */
+.explorer{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:26px 28px;margin-top:22px}
+.explorer-presets{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.preset-btn{background:var(--ink);color:var(--limestone);border:0;border-radius:4px;padding:9px 14px;font-size:12px}
+.preset-btn:hover{background:var(--verdigris)}
+.explorer-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.explorer-controls label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--sage)}
+.explorer-controls select{border:1px solid var(--line);background:#fff;border-radius:4px;padding:8px 9px;font-size:13px}
+.explorer-controls select:disabled{opacity:.5}
+.explorer-result{display:flex;align-items:center;gap:28px;padding:22px 0;border-bottom:1px solid var(--line)}
+.explorer-score{text-align:center;min-width:110px}
+.explorer-score strong{display:block;font-family:'JetBrains Mono',monospace;font-size:38px;color:var(--ink)}
+.explorer-score span{font-size:11px;color:var(--sage)}
+.explorer-mechanism{font-size:14px;line-height:1.6;color:#4B524D}
+.explorer-mechanism b{color:var(--ink)}
+.explorer-compare,.explorer-predictors{padding:20px 0;border-bottom:1px solid var(--line)}
+.explorer-predictors{border-bottom:0}
+.compare-label{font-size:12px;color:var(--sage);margin-bottom:12px}
+.compare-bars,.predictor-bars{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:grid;grid-template-columns:150px 1fr 60px;align-items:center;gap:10px;font-size:12px}
+.bar-row .track{background:var(--paper);border-radius:3px;height:14px;overflow:hidden}
+.bar-row .fill{height:100%;border-radius:3px}
+.bar-row .fill.grey{background:var(--sage)}
+.bar-row .fill.rust{background:var(--rust)}
+.bar-row .fill.verd{background:var(--verdigris)}
+.bar-row .val{font-family:'JetBrains Mono',monospace;text-align:right}
+#compareTag{display:inline-block;margin-top:12px}

@@ -22,7 +22,7 @@
   <div class="hero-inner">
     <div class="hero-eyebrow">ThermoBase — a data investigation</div>
     <h1>A pattern in this data looked almost too good to be true. It was.</h1>
-    <p class="hero-sub">1,238 extremophile organisms, 337 measured fields. One metabolic pathway looked <b>81% predictable</b> from environment alone — until we controlled for which lineage the organism belonged to, and that number fell to <b>21%</b>. This is how we found that out, and what's still standing once we did.</p>
+    <p class="hero-sub">1,238 extremophile organisms, 337 measured fields. An environment-only model we built looked <b>81% predictable</b> for one metabolic pathway — until we tested it against holding out entire lineages, and that number fell to <b>21%</b>. This is how we found that out, and what's still standing once we did.</p>
     <div class="hero-visual">
       <div class="hero-bars">
         <div class="hero-bar grey"><div class="num" id="heroNumRandom">—</div><div class="fill" id="heroFillRandom" style="height:0px"></div><div class="label">Random test</div></div>
@@ -33,6 +33,15 @@
     <div class="scroll-cue">Scroll to see how we know ↓</div>
   </div>
 </header>
+
+<section class="intro" id="intro">
+  <div class="stop">
+    <div class="stop-num">Before you start</div>
+    <h3>What this is, and how it was built</h3>
+    <p class="lede">This piece exists to answer one question: once you actually try to break the patterns in this data, what's left standing? Three acts carry that out in order — <b>Act I</b> audits how much the evidence itself can be trusted, <b>Act II</b> builds the strongest case the data supports and then stress-tests it, and <b>Act III</b> asks what the surviving signal is honestly allowed to say about worlds beyond Earth. Nothing in Act III uses a result that didn't survive Act II.</p>
+    <p class="lede"><b>On the data itself:</b> NASA's original AHED ThermoBase release (S1) is a 26-column spreadsheet of taxonomy, basic physiology, and literature sources for these same 1,238 organisms. The 337-field research layer used throughout this piece — the chemical-role adjudication, the biosignature classification, the quality-control layers, and the machine-learning models in Act II — is original analytical work built on top of that baseline, not part of NASA's release. Act I.1 shows exactly what that expansion looks like for one organism.</p>
+  </div>
+</section>
 
 <main>
 
@@ -54,6 +63,9 @@
     </div>
     <div class="chart-card"><div id="chartEnv" class="plot"></div>
       <div class="read"><b>Two environment types account for over a third of records.</b> Hot springs and hydrothermal vents dominate; this reflects where researchers have gone looking, not where extremophile life is most common.</div>
+    </div>
+    <div class="chart-card" id="exampleCard" style="margin-top:16px">
+      <div class="read" style="border-top:0;padding-top:0" id="exampleText">—</div>
     </div>
   </div>
 
@@ -104,12 +116,35 @@
   <div class="stop wide" id="stop-2-3">
     <div class="stop-num">II.3 — the climax</div>
     <h3>The stress test</h3>
-    <p class="lede">Six metabolic pathways looked predictable from environment alone under ordinary random cross-validation. Only one of them was tested against something harder: could the model still tell pathways apart once it could no longer lean on which branch of the tree of life an organism belonged to?</p>
-    <div class="verdict-list" id="verdictList"></div>
-    <div class="worked-example">
-      <h4>Hydrogen oxidation, worked through in full</h4>
-      <p id="workedExampleText" style="color:#D7DBD3">—</p>
-      <div class="read">Random cross-validation shuffles all 1,238 records together, so close relatives can end up on both sides of the split — the model can partly succeed by recognizing lineage, not environment. Grouped validation holds an entire phylum out at once, so the model must generalize to organisms unlike anything it trained on.</div>
+    <p class="lede">Six metabolic pathways looked predictable from environment alone under ordinary random cross-validation. This explorer runs the same question you're about to ask yourself: does that hold once the model can no longer lean on which branch of the tree of life an organism belongs to? Every number below is a real, already-computed result — nothing here retrains live.</p>
+
+    <div class="explorer">
+      <div class="explorer-presets">
+        <button class="preset-btn" data-preset="collapse">Reproduce the collapse</button>
+        <button class="preset-btn" data-preset="holds">A signal that holds</button>
+        <button class="preset-btn" data-preset="untestable">One we can't even test</button>
+      </div>
+      <div class="explorer-controls">
+        <label>Pathway<select id="expPathway"></select></label>
+        <label>Predictor set<select id="expPredictor"><option value="environment_only">Environment only</option><option value="taxonomy_only">Taxonomy only</option><option value="environment_plus_taxonomy">Environment + taxonomy</option></select></label>
+        <label>Validation<select id="expValidation"><option value="random">Random 5-fold</option><option value="grouped">Phylum-grouped</option></select></label>
+      </div>
+
+      <div class="explorer-result">
+        <div class="explorer-score"><strong id="expScore">—</strong><span id="expScoreLabel">ROC-AUC</span></div>
+        <div class="explorer-mechanism" id="expMechanism">—</div>
+      </div>
+
+      <div class="explorer-compare" id="expCompare">
+        <div class="compare-label">The actual test, for this pathway — environment-only, random vs. phylum-grouped</div>
+        <div class="compare-bars" id="compareBars"></div>
+        <span class="tag" id="compareTag"></span>
+      </div>
+
+      <div class="explorer-predictors">
+        <div class="compare-label">How much does swapping in taxonomy change things? (random validation)</div>
+        <div class="predictor-bars" id="predictorBars"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -151,13 +186,13 @@
     <div class="stop-num">III.3</div>
     <h3>What actually held up</h3>
     <div class="synthesis" id="synthesisText"><p>—</p></div>
-    <p class="source-line">Original dataset: <a href="https://ahed.nasa.gov/datasets/e6e6ade4a91fee03d9f99ea19602/t3c34s" target="_blank" rel="noopener">NASA AHED ThermoBase</a>.</p>
+    <p class="source-line">Original 26-field measurements: <a href="https://ahed.nasa.gov/datasets/e6e6ade4a91fee03d9f99ea19602/t3c34s" target="_blank" rel="noopener">NASA AHED ThermoBase (S1)</a>. The 337-field research layer, chemical-role adjudication, biosignature classification, QC layers, and machine-learning models used throughout this piece are original work, not part of NASA's release.</p>
   </div>
 </section>
 
 </main>
 
-<footer>Built from the ThermoBase v17 data release — 1,238 records, 337 fields. Verdicts are computed live from the stored model-comparison results, not narrated separately from the data.</footer>
+<footer>Built on NASA's 26-field AHED ThermoBase (S1) baseline, expanded into a 337-field research layer through original curation, adjudication, and modeling. Verdicts above are computed live from the stored model-comparison results, not narrated separately from the data.</footer>
 
 <script src="app.js"></script>
 </body>
