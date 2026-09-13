@@ -129,6 +129,7 @@
         <label>Predictor set<select id="expPredictor"><option value="environment_only">Environment only</option><option value="taxonomy_only">Taxonomy only</option><option value="environment_plus_taxonomy">Environment + taxonomy</option></select></label>
         <label>Validation<select id="expValidation"><option value="random">Random 5-fold</option><option value="grouped">Phylum-grouped</option></select></label>
       </div>
+      <div class="explorer-note" id="expNote" style="display:none">Locked to environment only — phylum-grouped validation was only computed for environment-only models in this release; there's no grouped result for taxonomy-based predictors to show.</div>
 
       <div class="explorer-result">
         <div class="explorer-score"><strong id="expScore">—</strong><span id="expScoreLabel">ROC-AUC</span></div>

@@ -142,3 +142,4 @@ footer{padding:40px 8vw 60px;font-size:12px;color:var(--sage);border-top:1px sol
 .bar-row .fill.verd{background:var(--verdigris)}
 .bar-row .val{font-family:'JetBrains Mono',monospace;text-align:right}
 #compareTag{display:inline-block;margin-top:12px}
+.explorer-note{font-size:12px;color:var(--sage);padding:12px 0 0;font-style:italic}

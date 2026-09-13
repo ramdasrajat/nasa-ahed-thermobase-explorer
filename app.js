@@ -8,7 +8,8 @@ const normPath=s=>String(s||'').toLowerCase().trim().replace(/[\s_]+/g,'-').repl
 const pathwaysOf=r=>String(r.metabolism_pathways||'').split(/[;,]/).map(s=>s.trim()).filter(Boolean);
 const hasPath=(r,p)=>pathwaysOf(r).some(v=>normPath(v)===normPath(p)||normPath(v).includes(normPath(p)));
 
-const DOMAIN_COLORS={Bacteria:'#3F6C63',Archaea:'#A98B4C',Eukaryota:'#5C7A93'};
+const DOMAIN_COLORS={Bacteria:'#3F6C63',Archaea:'#A98B4C',Eukaryota:'#7A4C6B'};
+const DOMAIN_SYMBOLS={Bacteria:'circle',Archaea:'square',Eukaryota:'diamond'};
 const RUST='#C1440E', GREY='#B9BBAF', VERD='#3F6C63';
 
 let D=null;
@@ -64,7 +65,7 @@ function renderAct2(){
     const traces=domains.map(d=>{
       const rows=D.records.filter(r=>r.domain===d&&num(r.avg_optimum_temp_c)!=null&&num(r.avg_optimum_ph)!=null);
       return {x:rows.map(r=>num(r.avg_optimum_temp_c)),y:rows.map(r=>num(r.avg_optimum_ph)),mode:'markers',type:'scattergl',name:d,
-        marker:{size:5,opacity:.6,color:DOMAIN_COLORS[d]},hovertemplate:'%{x}°C, pH %{y}<extra>'+d+'</extra>'};
+        marker:{size:d==='Eukaryota'?7:5,opacity:d==='Eukaryota'?.85:.55,color:DOMAIN_COLORS[d],symbol:DOMAIN_SYMBOLS[d],line:{width:d==='Eukaryota'?1:0,color:'#fff'}},hovertemplate:'%{x}°C, pH %{y}<extra>'+d+'</extra>'};
     });
     Plotly.newPlot(el,traces,{
       xaxis:{title:'Optimum temperature (°C)',showgrid:false,zeroline:false},
@@ -114,8 +115,8 @@ function renderExplorer(){
     const pathway=pathwaySel.value;
     let predictor=predictorSel.value;
     const validation=validationSel.value;
-    if(validation==='grouped'){predictor='environment_only';predictorSel.value='environment_only';predictorSel.disabled=true}
-    else predictorSel.disabled=false;
+    if(validation==='grouped'){predictor='environment_only';predictorSel.value='environment_only';predictorSel.disabled=true;$('#expNote').style.display='block'}
+    else{predictorSel.disabled=false;$('#expNote').style.display='none'}
 
     // main score
     let score,label;
