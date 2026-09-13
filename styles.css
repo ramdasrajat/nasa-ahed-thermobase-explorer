@@ -143,3 +143,12 @@ footer{padding:40px 8vw 60px;font-size:12px;color:var(--sage);border-top:1px sol
 .bar-row .val{font-family:'JetBrains Mono',monospace;text-align:right}
 #compareTag{display:inline-block;margin-top:12px}
 .explorer-note{font-size:12px;color:var(--sage);padding:12px 0 0;font-style:italic}
+
+/* corroborating phylogenetic check — deliberately quieter than .explorer, not a competing climax */
+.corroboration{margin-top:26px;padding-top:24px;border-top:1px dashed var(--line)}
+.corroboration-label{font-size:12px;color:var(--verdigris);font-weight:500}
+.corroboration-stats{display:flex;gap:24px;flex-wrap:wrap;margin:16px 0}
+.corr-stat{background:var(--paper);border-radius:4px;padding:10px 14px}
+.corr-stat b{display:block;font-size:13px}
+.corr-stat span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sage)}
+.corroboration .lede{font-size:14px}
